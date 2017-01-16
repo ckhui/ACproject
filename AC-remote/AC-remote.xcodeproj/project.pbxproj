@@ -25,6 +25,8 @@
 		A18A03001E1CCB9F00D110F0 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18A02FF1E1CCB9F00D110F0 /* DashboardViewController.swift */; };
 		A18A03021E1CCBCC00D110F0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18A03011E1CCBCC00D110F0 /* LoginViewController.swift */; };
 		A1DF904C1E1E53E100062AEC /* DashboardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DF904B1E1E53E100062AEC /* DashboardTableViewCell.swift */; };
+		A1E644141E2C7C9A0087C72A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1E644131E2C7C9A0087C72A /* GoogleService-Info.plist */; };
+		A1E644171E2C9EFA0087C72A /* NextNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E644161E2C9EFA0087C72A /* NextNavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 		A18A02FF1E1CCB9F00D110F0 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = ViewController/DashboardViewController.swift; sourceTree = "<group>"; };
 		A18A03011E1CCBCC00D110F0 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ViewController/LoginViewController.swift; sourceTree = "<group>"; };
 		A1DF904B1E1E53E100062AEC /* DashboardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardTableViewCell.swift; path = View/DashboardTableViewCell.swift; sourceTree = "<group>"; };
+		A1E644131E2C7C9A0087C72A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A1E644161E2C9EFA0087C72A /* NextNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NextNavigationController.swift; path = ViewController/NextNavigationController.swift; sourceTree = "<group>"; };
 		B3DC5C7D70BD4E57C100B17F /* Pods-AC-remoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AC-remoteTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AC-remoteTests/Pods-AC-remoteTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E254B46245AF6470434CBDB6 /* Pods-AC-remote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AC-remote.release.xcconfig"; path = "Pods/Target Support Files/Pods-AC-remote/Pods-AC-remote.release.xcconfig"; sourceTree = "<group>"; };
 		F89A9524F7A122613B94F8A5 /* Pods-AC-remote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AC-remote.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AC-remote/Pods-AC-remote.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,18 +136,11 @@
 			children = (
 				A18A02CF1E1CCA7000D110F0 /* AppDelegate.swift */,
 				A18A02D31E1CCA7000D110F0 /* Main.storyboard */,
-				A18A02D61E1CCA7000D110F0 /* Assets.xcassets */,
-				A18A02D81E1CCA7000D110F0 /* LaunchScreen.storyboard */,
-				A18A02DB1E1CCA7000D110F0 /* Info.plist */,
-				A18A02FF1E1CCB9F00D110F0 /* DashboardViewController.swift */,
-				A18A03011E1CCBCC00D110F0 /* LoginViewController.swift */,
-				A135E8A11E25E656006866A3 /* SignUpViewController.swift */,
-				A135E89F1E25E55A006866A3 /* style.swift */,
-				A10453F51E1DDDF300B51BD1 /* StatusViewController.swift */,
-				A10453F71E1DF7F900B51BD1 /* Aircond.swift */,
-				A1DF904B1E1E53E100062AEC /* DashboardTableViewCell.swift */,
-				5F27174A1E247A56007CE277 /* SettingPageViewController.swift */,
-				A148AE461E271E0A0019EAAB /* CustomStyledButtom.swift */,
+				A1E644151E2C7CA30087C72A /* SupportingFile */,
+				A1E6440F1E2C771D0087C72A /* ViewController */,
+				A1E644111E2C77400087C72A /* Helper */,
+				A1E644101E2C77330087C72A /* Model */,
+				A1E644121E2C774B0087C72A /* View */,
 			);
 			path = "AC-remote";
 			sourceTree = "<group>";
@@ -164,6 +161,55 @@
 				A18A02F11E1CCA7100D110F0 /* Info.plist */,
 			);
 			path = "AC-remoteUITests";
+			sourceTree = "<group>";
+		};
+		A1E6440F1E2C771D0087C72A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A18A03011E1CCBCC00D110F0 /* LoginViewController.swift */,
+				A135E8A11E25E656006866A3 /* SignUpViewController.swift */,
+				A10453F51E1DDDF300B51BD1 /* StatusViewController.swift */,
+				5F27174A1E247A56007CE277 /* SettingPageViewController.swift */,
+				A18A02FF1E1CCB9F00D110F0 /* DashboardViewController.swift */,
+				A1E644161E2C9EFA0087C72A /* NextNavigationController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		A1E644101E2C77330087C72A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A10453F71E1DF7F900B51BD1 /* Aircond.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A1E644111E2C77400087C72A /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				A135E89F1E25E55A006866A3 /* style.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		A1E644121E2C774B0087C72A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A1DF904B1E1E53E100062AEC /* DashboardTableViewCell.swift */,
+				A148AE461E271E0A0019EAAB /* CustomStyledButtom.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		A1E644151E2C7CA30087C72A /* SupportingFile */ = {
+			isa = PBXGroup;
+			children = (
+				A18A02D61E1CCA7000D110F0 /* Assets.xcassets */,
+				A18A02D81E1CCA7000D110F0 /* LaunchScreen.storyboard */,
+				A18A02DB1E1CCA7000D110F0 /* Info.plist */,
+				A1E644131E2C7C9A0087C72A /* GoogleService-Info.plist */,
+			);
+			name = SupportingFile;
 			sourceTree = "<group>";
 		};
 		DBF31E0051E46CBA10E03C8F /* Pods */ = {
@@ -306,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A18A02DA1E1CCA7000D110F0 /* LaunchScreen.storyboard in Resources */,
+				A1E644141E2C7C9A0087C72A /* GoogleService-Info.plist in Resources */,
 				A18A02D71E1CCA7000D110F0 /* Assets.xcassets in Resources */,
 				A18A02D51E1CCA7000D110F0 /* Main.storyboard in Resources */,
 			);
@@ -475,6 +522,7 @@
 				A10453F81E1DF7F900B51BD1 /* Aircond.swift in Sources */,
 				5F27174B1E247A56007CE277 /* SettingPageViewController.swift in Sources */,
 				A1DF904C1E1E53E100062AEC /* DashboardTableViewCell.swift in Sources */,
+				A1E644171E2C9EFA0087C72A /* NextNavigationController.swift in Sources */,
 				A18A02D01E1CCA7000D110F0 /* AppDelegate.swift in Sources */,
 				A18A03001E1CCB9F00D110F0 /* DashboardViewController.swift in Sources */,
 				A135E8A21E25E656006866A3 /* SignUpViewController.swift in Sources */,

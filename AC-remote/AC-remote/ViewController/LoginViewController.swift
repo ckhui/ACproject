@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: NEXTViewController {
 
     @IBOutlet weak var signInButton: UIButton!{
         didSet {
@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setLogo()
+        initNaviBar()
         // Do any additional setup after loading the view.
     }
 

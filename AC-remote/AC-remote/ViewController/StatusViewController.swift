@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class StatusViewController: UIViewController {
+class StatusViewController: NEXTViewController {
     
     
     var url : String = ""

@@ -9,15 +9,14 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import Firebase
 
 
-class DashboardViewController: UIViewController {
+class DashboardViewController: NEXTViewController {
     
     var url : String = ""
     var isUrlValid = false
     var airconds = [Aircond]()
-    
-    
     
     @IBOutlet weak var timeLabel: UILabel!
     var timeFormat : DateFormatter!
@@ -37,9 +36,14 @@ class DashboardViewController: UIViewController {
         }
     }
     
+    var ref: FIRDatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initClock()
+
+        ref = FIRDatabase.database().reference()
+        
         
         checkForValidDomainUrl()
         
@@ -47,10 +51,7 @@ class DashboardViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-
-        
-        
+        loadFromFirebase()
         
         if isUrlValid {
             let (isUpdated , newUrl) = getUrlUpdate()
@@ -74,6 +75,19 @@ class DashboardViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func loadFromFirebase(){
+        
+        ref.observe(.value) { (snapshot) in
+
+            print (snapshot.value as Any)
+        }
+        
+//        let refHandle2 = ref.observe(FIRDataEventType.value, with: { (snapshot) in
+//            let postDict = snapshot.value as? [String : AnyObject] ?? [:]
+//            // ...
+//        })
     }
     
     func checkForValidDomainUrl() {
@@ -140,6 +154,7 @@ class DashboardViewController: UIViewController {
     
     func sendUrlRequest(domainUrl : String){
         airconds = []
+        airconds.append(Aircond())
         
         let fullUrl = url + "app_state?app_token=12345678"
         

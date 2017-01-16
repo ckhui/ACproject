@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingPageViewController: UIViewController {
+class SettingPageViewController: NEXTViewController {
     
     @IBOutlet weak var domainUrlTextField: UITextField!
     

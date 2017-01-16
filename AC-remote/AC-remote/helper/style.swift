@@ -9,6 +9,33 @@
 import Foundation
 import UIKit
 
+protocol LogoProtocol : class {
+
+    func configureLogo(_ logo: UIImage?, size: CGSize?)
+}
+
+extension LogoProtocol where Self:UIViewController {
+    func configureLogo(_ logo: UIImage?, size: CGSize?) {
+    
+        let logoImage = logo ?? UIImage(named: "next_logo")
+        let size = size ?? CGSize(width: 40, height: 40)
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        imageView.image = logoImage
+        imageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = imageView
+    }
+}
+
+
+extension UIViewController : LogoProtocol{}
+
+class NEXTViewController: UIViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureLogo(nil, size: nil)
+    }
+}
+
 class Style {
     
     static let menuBarBGColor = UIColor.black
@@ -24,6 +51,7 @@ class Style {
 
 
 extension UIViewController{
+    
     func warningPopUp(withTitle title : String?, withMessage message : String?){
         let popUP = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -33,10 +61,22 @@ extension UIViewController{
     
     func setLogo() {
         let logoImage = UIImage(named: "next_logo")
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 38, height: 38))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.image = logoImage
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView
+    }
+    
+    func setNaviBarHeight(height : CGFloat){
+        
+        guard let bounds = self.navigationController?.navigationBar.bounds
+            else { return }
+        self.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: height)
+    }
+    
+    func initNaviBar(){
+        setNaviBarHeight(height: 80)
+        setLogo()
     }
 }
 
@@ -51,4 +91,6 @@ extension UIButton {
         self.backgroundColor = Style.disabledButtonColor
         self.tintColor = Style.disabledButtonTintColor
     }
+    
+    
 }

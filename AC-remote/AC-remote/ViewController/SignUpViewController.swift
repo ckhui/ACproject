@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: NEXTViewController {
 
     
     @IBOutlet weak var backButton: UIButton!{
