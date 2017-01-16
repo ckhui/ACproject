@@ -1,0 +1,6 @@
+framework module Pods_AC_remoteUITests {
+  umbrella header "Pods-AC-remoteUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
