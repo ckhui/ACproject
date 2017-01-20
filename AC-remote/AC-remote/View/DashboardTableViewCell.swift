@@ -27,11 +27,7 @@ class DashboardTableViewCell: UITableViewCell {
         self.layer.borderColor = UIColor.lightGray.cgColor
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
-    }
     
     func initLabels(){
         idLabel.text = ""

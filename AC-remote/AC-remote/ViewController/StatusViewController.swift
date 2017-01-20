@@ -326,9 +326,10 @@ class StatusViewController: NEXTViewController {
     // send request
     func sendChangeStatusRequest(){
         
-        let urlRequest = url + "app_state/\(aircond.id)?app_token=12345678"
+        let urlRequest = url + "app_state/\(aircond.id)"
+        //?app_token=1ea247c92b26eef9907513d43d434d7"
         
-        let param = ["status":aircond.statusString(), "mode":aircond.modeString(), "fan_speed": aircond.fanspeedString(), "temperature" : aircond.temperaturString()]
+        let param : [String:Any] = ["aircond" : ["status":aircond.statusString(), "mode":aircond.modeString(), "fan_speed": aircond.fanspeedString(), "temperature" : aircond.temperaturString()], "app_token" : "efdc4648983cf45a6357e6b4edf069f2", "user_name": "name"]
         
         print(param)
         Alamofire.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in

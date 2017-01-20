@@ -15,7 +15,13 @@
 		A10453F81E1DF7F900B51BD1 /* Aircond.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10453F71E1DF7F900B51BD1 /* Aircond.swift */; };
 		A135E8A01E25E55A006866A3 /* style.swift in Sources */ = {isa = PBXBuildFile; fileRef = A135E89F1E25E55A006866A3 /* style.swift */; };
 		A135E8A21E25E656006866A3 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A135E8A11E25E656006866A3 /* SignUpViewController.swift */; };
+		A1423DE41E2F132F00084A8E /* ACModeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1423DE31E2F132F00084A8E /* ACModeView.xib */; };
+		A1423DE61E2F14FA00084A8E /* ACModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1423DE51E2F14FA00084A8E /* ACModeView.swift */; };
+		A1423DE81E2F1A0E00084A8E /* testBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1423DE71E2F1A0E00084A8E /* testBoard.swift */; };
+		A1423DEA1E2F2B5A00084A8E /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1423DE91E2F2B5A00084A8E /* TestViewController.swift */; };
 		A148AE471E271E0A0019EAAB /* CustomStyledButtom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A148AE461E271E0A0019EAAB /* CustomStyledButtom.swift */; };
+		A15DC55C1E2E0503009BC0A3 /* AircondBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15DC55B1E2E0503009BC0A3 /* AircondBoard.swift */; };
+		A15DC5601E2E0878009BC0A3 /* AircondBoard.xib in Resources */ = {isa = PBXBuildFile; fileRef = A15DC55F1E2E0878009BC0A3 /* AircondBoard.xib */; };
 		A18A02D01E1CCA7000D110F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18A02CF1E1CCA7000D110F0 /* AppDelegate.swift */; };
 		A18A02D51E1CCA7000D110F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A18A02D31E1CCA7000D110F0 /* Main.storyboard */; };
 		A18A02D71E1CCA7000D110F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A18A02D61E1CCA7000D110F0 /* Assets.xcassets */; };
@@ -58,7 +64,13 @@
 		A12DC8BE5824A86852F41BC7 /* Pods-AC-remoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AC-remoteTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AC-remoteTests/Pods-AC-remoteTests.release.xcconfig"; sourceTree = "<group>"; };
 		A135E89F1E25E55A006866A3 /* style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = style.swift; path = helper/style.swift; sourceTree = "<group>"; };
 		A135E8A11E25E656006866A3 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ViewController/SignUpViewController.swift; sourceTree = "<group>"; };
+		A1423DE31E2F132F00084A8E /* ACModeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACModeView.xib; sourceTree = "<group>"; };
+		A1423DE51E2F14FA00084A8E /* ACModeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ACModeView.swift; path = View/ACModeView.swift; sourceTree = "<group>"; };
+		A1423DE71E2F1A0E00084A8E /* testBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = testBoard.swift; path = View/testBoard.swift; sourceTree = "<group>"; };
+		A1423DE91E2F2B5A00084A8E /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestViewController.swift; path = ViewController/TestViewController.swift; sourceTree = "<group>"; };
 		A148AE461E271E0A0019EAAB /* CustomStyledButtom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomStyledButtom.swift; path = View/CustomStyledButtom.swift; sourceTree = "<group>"; };
+		A15DC55B1E2E0503009BC0A3 /* AircondBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AircondBoard.swift; path = View/AircondBoard.swift; sourceTree = "<group>"; };
+		A15DC55F1E2E0878009BC0A3 /* AircondBoard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AircondBoard.xib; sourceTree = "<group>"; };
 		A18A02CC1E1CCA7000D110F0 /* AC-remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AC-remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A18A02CF1E1CCA7000D110F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A18A02D41E1CCA7000D110F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -136,6 +148,7 @@
 			children = (
 				A18A02CF1E1CCA7000D110F0 /* AppDelegate.swift */,
 				A18A02D31E1CCA7000D110F0 /* Main.storyboard */,
+				A1423DE91E2F2B5A00084A8E /* TestViewController.swift */,
 				A1E644151E2C7CA30087C72A /* SupportingFile */,
 				A1E6440F1E2C771D0087C72A /* ViewController */,
 				A1E644111E2C77400087C72A /* Helper */,
@@ -197,6 +210,11 @@
 			children = (
 				A1DF904B1E1E53E100062AEC /* DashboardTableViewCell.swift */,
 				A148AE461E271E0A0019EAAB /* CustomStyledButtom.swift */,
+				A15DC55B1E2E0503009BC0A3 /* AircondBoard.swift */,
+				A15DC55F1E2E0878009BC0A3 /* AircondBoard.xib */,
+				A1423DE31E2F132F00084A8E /* ACModeView.xib */,
+				A1423DE51E2F14FA00084A8E /* ACModeView.swift */,
+				A1423DE71E2F1A0E00084A8E /* testBoard.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -352,7 +370,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A18A02DA1E1CCA7000D110F0 /* LaunchScreen.storyboard in Resources */,
+				A15DC5601E2E0878009BC0A3 /* AircondBoard.xib in Resources */,
 				A1E644141E2C7C9A0087C72A /* GoogleService-Info.plist in Resources */,
+				A1423DE41E2F132F00084A8E /* ACModeView.xib in Resources */,
 				A18A02D71E1CCA7000D110F0 /* Assets.xcassets in Resources */,
 				A18A02D51E1CCA7000D110F0 /* Main.storyboard in Resources */,
 			);
@@ -517,7 +537,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1423DE81E2F1A0E00084A8E /* testBoard.swift in Sources */,
 				A148AE471E271E0A0019EAAB /* CustomStyledButtom.swift in Sources */,
+				A15DC55C1E2E0503009BC0A3 /* AircondBoard.swift in Sources */,
 				A18A03021E1CCBCC00D110F0 /* LoginViewController.swift in Sources */,
 				A10453F81E1DF7F900B51BD1 /* Aircond.swift in Sources */,
 				5F27174B1E247A56007CE277 /* SettingPageViewController.swift in Sources */,
@@ -525,7 +547,9 @@
 				A1E644171E2C9EFA0087C72A /* NextNavigationController.swift in Sources */,
 				A18A02D01E1CCA7000D110F0 /* AppDelegate.swift in Sources */,
 				A18A03001E1CCB9F00D110F0 /* DashboardViewController.swift in Sources */,
+				A1423DEA1E2F2B5A00084A8E /* TestViewController.swift in Sources */,
 				A135E8A21E25E656006866A3 /* SignUpViewController.swift in Sources */,
+				A1423DE61E2F14FA00084A8E /* ACModeView.swift in Sources */,
 				A10453F61E1DDDF300B51BD1 /* StatusViewController.swift in Sources */,
 				A135E8A01E25E55A006866A3 /* style.swift in Sources */,
 			);

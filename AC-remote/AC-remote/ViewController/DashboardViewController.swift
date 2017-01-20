@@ -30,6 +30,7 @@ class DashboardViewController: NEXTViewController {
         }
     }
     
+    
     @IBOutlet weak var settingButton: UIButton! {
         didSet{
             settingButton.addTarget(self, action: #selector(onSettingButtonPressed(_:)) , for: .touchUpInside)
@@ -51,6 +52,8 @@ class DashboardViewController: NEXTViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        airconds = []
+
         loadFromFirebase()
         
         if isUrlValid {
@@ -58,13 +61,13 @@ class DashboardViewController: NEXTViewController {
             if isUpdated {
                 url = newUrl
                 warningPopUp(withTitle: "New Domain Url", withMessage: url)
-                sendUrlRequest(domainUrl: url)
+                //sendUrlRequest(domainUrl: url)
             }
             else{
                 if airconds.count > 0 {
                     aircondTableView.reloadData()
                 } else {
-                    sendUrlRequest(domainUrl: url)
+                    //sendUrlRequest(domainUrl: url)
                 }
             }
             
@@ -79,11 +82,46 @@ class DashboardViewController: NEXTViewController {
     
     func loadFromFirebase(){
         
-        ref.observe(.value) { (snapshot) in
+        ref.observe(.value, with: { (snapshot) in
 
             print (snapshot.value as Any)
-        }
+            let jsonVar = JSON(snapshot.value)
+            let airconds = jsonVar["airconds"]
+            
+            print(airconds)
+            for ac in airconds{
+                let tempAc = Aircond(id: ac.0,value: ac.1)
+                self.airconds.append(tempAc)
+            }
+            
+            DispatchQueue.main.async {
+                self.sortAircondById()
+                self.aircondTableView.reloadData()
+            }
+
+        })
+    
         
+        /*
+         ref.observe(.value) { (snapshot) in
+         print (snapshot.value as Any)
+         
+         let jsonVar = JSON(snapshot.value)
+         
+         let airconds = jsonVar["airconds"]
+         
+         print(airconds)
+         for ac in airconds{
+         let tempAc = Aircond(id: ac.0,value: ac.1)
+         self.airconds.append(tempAc)
+         }
+         
+         DispatchQueue.main.async {
+         self.sortAircondById()
+         self.aircondTableView.reloadData()
+         }
+         }
+ */
 //        let refHandle2 = ref.observe(FIRDataEventType.value, with: { (snapshot) in
 //            let postDict = snapshot.value as? [String : AnyObject] ?? [:]
 //            // ...
@@ -154,7 +192,7 @@ class DashboardViewController: NEXTViewController {
     
     func sendUrlRequest(domainUrl : String){
         airconds = []
-        airconds.append(Aircond())
+        //airconds.append(Aircond())
         
         let fullUrl = url + "app_state?app_token=12345678"
         
