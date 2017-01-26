@@ -12,7 +12,9 @@ import Alamofire
 class StatusViewController: NEXTViewController {
     
     
-    var url : String = ""
+    var url : String = UserDefaults.getDomain()
+    var token : String = UserDefaults.getToken()
+    var username : String = UserDefaults.getName()
     
     // titleLabel
     @IBOutlet weak var modeTitle: UILabel!
@@ -76,10 +78,6 @@ class StatusViewController: NEXTViewController {
         setStatus()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func initAircondDetails(){
         self.title = aircond.alias
@@ -319,27 +317,19 @@ class StatusViewController: NEXTViewController {
         }
     }
     
+    
     @IBAction func gopressed(_ sender: Any) {
         sendChangeStatusRequest()
     }
-    
-    // send request
+
     func sendChangeStatusRequest(){
         
         let urlRequest = url + "app_state/\(aircond.id)"
-        //?app_token=1ea247c92b26eef9907513d43d434d7"
+        let param : [String:Any] = ["aircond" : ["status":aircond.statusString(), "mode":aircond.modeString(), "fan_speed": aircond.fanspeedString(), "temperature" : aircond.temperaturString()], "app_token" : token, "user_name": username]
         
-        let param : [String:Any] = ["aircond" : ["status":aircond.statusString(), "mode":aircond.modeString(), "fan_speed": aircond.fanspeedString(), "temperature" : aircond.temperaturString()], "app_token" : "efdc4648983cf45a6357e6b4edf069f2", "user_name": "name"]
-        
-        print(param)
+        //print(param)
         Alamofire.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
             
-            //            print("send request")
-            print(response.request as Any)  // original URL request
-            print(response.response as Any) // URL response
-            print(response.result.value as Any)   // result of response serialization
-            //            print("sent request")
-            //
             var message = "Other Response"
             let popUpTitle = "Status : \(response.result.description.lowercased())"
             if response.result.isSuccess {
@@ -347,17 +337,34 @@ class StatusViewController: NEXTViewController {
                     if let returnMessage = returnDict["response"]
                     {
                         message = returnMessage
+
+                        if message == "Invalid Token"{
+                            self.popUpToLogUserOut()
+                            return
+                        }
                     }
                 }
             }
             self.warningPopUp(withTitle: popUpTitle, withMessage: message)
         }
-        
     }
+    //TODO : Respberry response
     
     
     @IBAction func onBackButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func popUpToLogUserOut(){
+        let popUP = UIAlertController(title: "Error", message: "Invalid Token", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .cancel){ (action) in
+            NotificationCenter.appSignOut()
+        }
+
+        popUP.addAction(okButton)
+        present(popUP, animated: true, completion: nil)
+        
+        
     }
     
 }

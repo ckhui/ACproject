@@ -11,7 +11,6 @@ import UIKit
 class SettingPageViewController: NEXTViewController {
     
     @IBOutlet weak var domainUrlTextField: UITextField!
-    
     @IBOutlet weak var backButton: UIButton!{
         didSet{
             backButton.addTarget(self, action: #selector(onBackButtonPressed), for: .touchUpInside)

@@ -43,8 +43,7 @@ class TestViewController: UIViewController {
     }
     */
     
-    //let url = "http://e61f0316.ngrok.io/"
-    let url = "https://2420b796.ngrok.io/"
+    let url = "http://47a431b4.ngrok.io/"
 
     @IBOutlet weak var nameTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
@@ -53,22 +52,8 @@ class TestViewController: UIViewController {
     
     
     @IBAction func createBtPressed(_ sender: Any) {
-        let urlRequest = url + "app_create/"
         
-        guard let name = nameTF.text,
-            let pw = passwordTF.text
-            else { return }
         
-        let param = ["user_name": name,
-                     "password" : pw]
-        
-        Alamofire.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
-            
-            print("CREAT")
-            print(response.request as Any)  // original URL request
-            print(response.response as Any) // URL response
-            print(response.result.value as Any)   // result of response serialization
-        }
 
     }
 
@@ -87,7 +72,24 @@ class TestViewController: UIViewController {
             print(response.response as Any) // URL response
             print(response.result.value as Any)   // result of response serialization
         }
-//        
+    }
+    @IBAction func validateBtnPressed(_ sender: Any) {
+            let urlRequest = url + "validate_token/"
+            
+            guard let name = nameTF.text,
+                let token = tokenTF.text
+                else { return }
+            
+            let param = ["user_name": name ,"app_token" : token]
+            
+            Alamofire.request(urlRequest, parameters: param).responseString { (response) in
+                print("GET")
+                print(response.request as Any)  // original URL request
+                print(response.response as Any) // URL response
+                print(response.result.value as Any)   // result of response serialization
+            }
+    }
+//
 //        Alamofire.request(urlRequest, method: ., parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
 //            
 //            print("GET")
@@ -95,7 +97,6 @@ class TestViewController: UIViewController {
 //            print(response.response as Any) // URL response
 //            print(response.result.value as Any)   // result of response serialization
 //        }
-    }
     
     
     /*

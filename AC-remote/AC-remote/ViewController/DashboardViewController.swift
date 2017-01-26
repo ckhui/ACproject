@@ -14,9 +14,9 @@ import Firebase
 
 class DashboardViewController: NEXTViewController {
     
-    var url : String = ""
-    var isUrlValid = false
+    var url : String = UserDefaults.getDomain()
     var airconds = [Aircond]()
+    var token : String = ""
     
     @IBOutlet weak var timeLabel: UILabel!
     var timeFormat : DateFormatter!
@@ -30,62 +30,37 @@ class DashboardViewController: NEXTViewController {
         }
     }
     
-    
-    @IBOutlet weak var settingButton: UIButton! {
-        didSet{
-            settingButton.addTarget(self, action: #selector(onSettingButtonPressed(_:)) , for: .touchUpInside)
-        }
-    }
-    
     var ref: FIRDatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initClock()
+        initLogoutButton()
 
         ref = FIRDatabase.database().reference()
-        
-        
-        checkForValidDomainUrl()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         airconds = []
-
         loadFromFirebase()
-        
-        if isUrlValid {
-            let (isUpdated , newUrl) = getUrlUpdate()
-            if isUpdated {
-                url = newUrl
-                warningPopUp(withTitle: "New Domain Url", withMessage: url)
-                //sendUrlRequest(domainUrl: url)
-            }
-            else{
-                if airconds.count > 0 {
-                    aircondTableView.reloadData()
-                } else {
-                    //sendUrlRequest(domainUrl: url)
-                }
-            }
-            
-        }
-        
+        // TODO : listen to firebase
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func initLogoutButton(){
+        let button = UIBarButtonItem(title: "LogOut", style: .plain, target: self , action: #selector(logoutUser))
+        button.tintColor = UIColor.white
+        navigationItem.rightBarButtonItem = button
+    }
+    
+    func logoutUser(){
+        print("logOut")
+        NotificationCenter.appSignOut()
     }
     
     func loadFromFirebase(){
         
         ref.observe(.value, with: { (snapshot) in
-
             print (snapshot.value as Any)
-            let jsonVar = JSON(snapshot.value)
+            guard let value = snapshot.value
+                else { return }
+            let jsonVar = JSON(value)
             let airconds = jsonVar["airconds"]
             
             print(airconds)
@@ -98,61 +73,9 @@ class DashboardViewController: NEXTViewController {
                 self.sortAircondById()
                 self.aircondTableView.reloadData()
             }
-
         })
-    
-        
-        /*
-         ref.observe(.value) { (snapshot) in
-         print (snapshot.value as Any)
-         
-         let jsonVar = JSON(snapshot.value)
-         
-         let airconds = jsonVar["airconds"]
-         
-         print(airconds)
-         for ac in airconds{
-         let tempAc = Aircond(id: ac.0,value: ac.1)
-         self.airconds.append(tempAc)
-         }
-         
-         DispatchQueue.main.async {
-         self.sortAircondById()
-         self.aircondTableView.reloadData()
-         }
-         }
- */
-//        let refHandle2 = ref.observe(FIRDataEventType.value, with: { (snapshot) in
-//            let postDict = snapshot.value as? [String : AnyObject] ?? [:]
-//            // ...
-//        })
     }
     
-    func checkForValidDomainUrl() {
-        let savedUrl = UserDefaults.standard.string(forKey: "domain") ?? ""
-        if savedUrl == "" {
-            isUrlValid = false
-            let popUP = UIAlertController(title: "Invalid Domain Url", message: "Go to Setting Page", preferredStyle: .alert)
-            let goButton = UIAlertAction(title: "Go", style: .cancel, handler: { (action) in
-                self.performSegue(withIdentifier: "toSettingPage", sender: self)
-            })
-            popUP.addAction(goButton)
-            present(popUP, animated: true, completion: nil)
-        }
-        else{
-            url = savedUrl
-            isUrlValid = true
-        }
-    }
-    
-    func getUrlUpdate() -> (Bool, String) {
-        let savedUrl = UserDefaults.standard.string(forKey: "domain") ?? ""
-        if url == savedUrl {
-            return (false, url)
-        }else {
-            return (true, savedUrl)
-        }
-    }
     
     func initClock(){
         timeFormat = DateFormatter()
@@ -166,12 +89,7 @@ class DashboardViewController: NEXTViewController {
         timeLabel.text = timeFormat.string(from: now)
     }
     
-    
-    func onSettingButtonPressed(_ sender: Any) {
-        
-        performSegue(withIdentifier: "toSettingPage", sender: self)
-    }
-    
+
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showStatus" {
@@ -182,70 +100,7 @@ class DashboardViewController: NEXTViewController {
             
             statusVC.url = url
         }
-        else if segue.identifier == "toSettingPage"
-        {
-            return
-        }
     }
-    
-    
-    
-    func sendUrlRequest(domainUrl : String){
-        airconds = []
-        //airconds.append(Aircond())
-        
-        let fullUrl = url + "app_state?app_token=12345678"
-        
-        Alamofire.request(fullUrl).responseJSON {responseData -> Void in
-            if !responseData.result.isSuccess {
-                print("fail loading data")
-                self.warningPopUp(withTitle: "Fail to load data", withMessage: "from \(self.url)")
-            }
-            else if((responseData.result.value) != nil) {
-                let jsonVar = JSON(responseData.result.value!)
-                
-                let airconds = jsonVar["airconds"]
-                
-                print(airconds)
-                for ac in airconds{
-                    let tempAc = Aircond(id: ac.0,value: ac.1)
-                    self.airconds.append(tempAc)
-                }
-            }
-            DispatchQueue.main.async {
-                self.sortAircondById()
-                self.aircondTableView.reloadData()
-            }
-
-        }
-    }
-    
-
-//        
-//        let _url = URL(string: fullUrl)
-//        URLSession.shared.dataTask(with: _url!, completionHandler: {(data, response, error) in
-//            guard let data = data, error == nil else { return }
-//            do {
-//                let json = JSON(data: data)
-//                let airconds = json["airconds"]
-//                
-//                print(airconds)
-//                for ac in airconds{
-//                    let tempAc = Aircond(id: ac.0,value: ac.1)
-//                    self.airconds.append(tempAc)
-//                }
-//                
-//                DispatchQueue.main.async {
-//                    self.sortAircondById()
-//                    self.aircondTableView.reloadData()
-//                }
-//                
-//            }
-//            //            catch let error as NSError {
-//            //                print(error)
-//            //            }
-//        }).resume()
-//    }
     
     func sortAircondById(){
         airconds.sort(by: {$0.id < $1.id})
@@ -304,8 +159,37 @@ extension DashboardViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showStatus", sender: indexPath)
     }
-    
-    
-    
-    
 }
+
+
+/*
+ 
+ 
+ func sendUrlRequest(domainUrl : String){
+ airconds = []
+ //airconds.append(Aircond())
+ let fullUrl = url + "app_state?app_token=\(token)"
+ Alamofire.request(fullUrl).responseJSON {responseData -> Void in
+ if !responseData.result.isSuccess {
+ print("fail loading data")
+ self.warningPopUp(withTitle: "Fail to load data", withMessage: "from \(self.url)")
+ }
+ else if((responseData.result.value) != nil) {
+ let jsonVar = JSON(responseData.result.value!)
+ 
+ let airconds = jsonVar["airconds"]
+ 
+ print(airconds)
+ for ac in airconds{
+ let tempAc = Aircond(id: ac.0,value: ac.1)
+ self.airconds.append(tempAc)
+ }
+ }
+ DispatchQueue.main.async {
+ self.sortAircondById()
+ self.aircondTableView.reloadData()
+ }
+ 
+ }
+ }
+ */

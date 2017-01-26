@@ -181,9 +181,9 @@
 			children = (
 				A18A03011E1CCBCC00D110F0 /* LoginViewController.swift */,
 				A135E8A11E25E656006866A3 /* SignUpViewController.swift */,
-				A10453F51E1DDDF300B51BD1 /* StatusViewController.swift */,
 				5F27174A1E247A56007CE277 /* SettingPageViewController.swift */,
 				A18A02FF1E1CCB9F00D110F0 /* DashboardViewController.swift */,
+				A10453F51E1DDDF300B51BD1 /* StatusViewController.swift */,
 				A1E644161E2C9EFA0087C72A /* NextNavigationController.swift */,
 			);
 			name = ViewController;

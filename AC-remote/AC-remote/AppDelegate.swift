@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navBarAppearance.barTintColor =  Style.menuBarBGColor
         navBarAppearance.tintColor = Style.menuBarTintColor
         
+        observeNotification()
         return true
     }
 
@@ -49,5 +50,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+
+extension AppDelegate
+{
+    func observeNotification ()
+    {
+        NotificationCenter.default.addObserver(self, selector:#selector(handleUserLoginNotification(_:)), name: Notification.Name(rawValue: "AuthSuccessNotification"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector:#selector(handleUserLogoutNotification(_:)), name: Notification.Name(rawValue: "UserLogoutNotification"), object: nil)
+    }
+    
+    func handleUserLoginNotification (_ notification: Notification)
+    {
+        //this will only be called if user successfully login
+        let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        let naviController = storyBoard.instantiateViewController(withIdentifier: "MainNavigationContoller")
+        
+        window?.rootViewController = naviController
+    }
+    
+    func handleUserLogoutNotification(_ notification: Notification){
+        //this will call when user logout successfully
+        let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "LoginNavigationController")
+        
+        window?.rootViewController = viewController
+    }
+    
 }
 
