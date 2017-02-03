@@ -50,24 +50,6 @@ class DashboardTableViewCell: UITableViewCell {
         temperatureLabel.text = aircond.temperaturString()
         
         aliasLabel.text = aircond.alias
-        
-        
-        
-        
-        
-//        switch(aircond.status){
-//        case .ON :
-//            statusLabel.text = "ON"
-//        case .OFF :
-//            statusLabel.text = "OFF"
-//            return
-//        case .PENDING:
-//            statusLabel.text = "PENDING"
-//            return
-//        }
-//    
-//        displayModeSpeedTemperature(aircond: aircond)
-        
     }
     
     func displayModeSpeedTemperature(aircond : Aircond){

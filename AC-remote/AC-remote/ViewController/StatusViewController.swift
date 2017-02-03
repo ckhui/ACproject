@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class StatusViewController: NEXTViewController {
+class StatusViewController: UIViewController {
     
     
     var url : String = UserDefaults.getDomain()
@@ -22,7 +22,7 @@ class StatusViewController: NEXTViewController {
     @IBOutlet weak var temperatureTitle: UILabel!
     
     // display
-    @IBOutlet weak var aliasTextField: UITextField!
+    @IBOutlet weak var aliasLabel: UILabel!
     @IBOutlet weak var statusDisplay: UISegmentedControl! {
         didSet{
             statusDisplay.addTarget(self, action: #selector(didChangeStatus), for: .valueChanged)
@@ -82,7 +82,7 @@ class StatusViewController: NEXTViewController {
     func initAircondDetails(){
         self.title = aircond.alias
         
-        aliasTextField.text = aircond.alias
+        aliasLabel.text = aircond.alias
         
         if aircond.status == .PENDING{
             statusDisplay.selectedSegmentIndex = -1
@@ -266,6 +266,18 @@ class StatusViewController: NEXTViewController {
         
         let selectedRow = aircond.temperature - minTemperature
         temperaturePickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapWhenPickerPresented(_:)))
+        view.addGestureRecognizer(tap)
+    
+    }
+    
+    func handleTapWhenPickerPresented (_ sender : UITapGestureRecognizer){
+        print("TAPPPPP")
+        if sender.state == .ended {
+            hideTemperaturePicker()
+            sender.view?.removeGestureRecognizer(sender)
+        }
     }
     
     func hideTemperaturePicker(){
@@ -327,7 +339,7 @@ class StatusViewController: NEXTViewController {
         let urlRequest = url + "app_state/\(aircond.id)"
         let param : [String:Any] = ["aircond" : ["status":aircond.statusString(), "mode":aircond.modeString(), "fan_speed": aircond.fanspeedString(), "temperature" : aircond.temperaturString()], "app_token" : token, "user_name": username]
         
-        //print(param)
+        print(param)
         Alamofire.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
             
             var message = "Other Response"
@@ -337,6 +349,7 @@ class StatusViewController: NEXTViewController {
                     if let returnMessage = returnDict["response"]
                     {
                         message = returnMessage
+                        //print(message)
 
                         if message == "Invalid Token"{
                             self.popUpToLogUserOut()
@@ -350,10 +363,6 @@ class StatusViewController: NEXTViewController {
     }
     //TODO : Respberry response
     
-    
-    @IBAction func onBackButtonPressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
     
     func popUpToLogUserOut(){
         let popUP = UIAlertController(title: "Error", message: "Invalid Token", preferredStyle: .alert)
@@ -383,5 +392,6 @@ extension StatusViewController : UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return String(temperaturePickerSelection[row])
     }
+    
     
 }

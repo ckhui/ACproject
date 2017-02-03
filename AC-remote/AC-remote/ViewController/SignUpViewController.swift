@@ -11,7 +11,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class SignUpViewController: NEXTViewController {
+class SignUpViewController: UIViewController {
     
     var url = ""
     var savedUsername : String?

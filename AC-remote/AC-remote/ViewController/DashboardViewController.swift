@@ -12,7 +12,7 @@ import Alamofire
 import Firebase
 
 
-class DashboardViewController: NEXTViewController {
+class DashboardViewController: UIViewController {
     
     var url : String = UserDefaults.getDomain()
     var airconds = [Aircond]()
@@ -27,6 +27,7 @@ class DashboardViewController: NEXTViewController {
             aircondTableView.dataSource = self
             aircondTableView.layer.borderColor = UIColor.black.cgColor
             aircondTableView.layer.borderWidth = 2.0
+            
         }
     }
     
@@ -34,6 +35,20 @@ class DashboardViewController: NEXTViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        let image = UIImage(named: "next_logo")
+        let rect = CGRect(x: 0, y: 0, width: 40, height: 40)
+        let imageView = UIButton(frame: rect)
+        imageView.contentMode = .scaleAspectFit
+        imageView.setImage(image, for: .normal)
+        navigationItem.titleView = imageView
+        
+        
+        navigationItem.titleView?.contentMode = .scaleAspectFit
+    
+        
         initClock()
         initLogoutButton()
 
@@ -41,6 +56,11 @@ class DashboardViewController: NEXTViewController {
         airconds = []
         loadFromFirebase()
         // TODO : listen to firebase
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
     }
     
     func initLogoutButton(){
@@ -57,15 +77,19 @@ class DashboardViewController: NEXTViewController {
     func loadFromFirebase(){
         
         ref.observe(.value, with: { (snapshot) in
-            print (snapshot.value as Any)
+            print("fetch data")
+            //print (snapshot.value as Any)
             guard let value = snapshot.value
                 else { return }
             let jsonVar = JSON(value)
-            let airconds = jsonVar["airconds"]
+            let aircondsJson = jsonVar["airconds"]
             
-            print(airconds)
-            for ac in airconds{
+            //print(aircondsJson)
+            self.airconds = []
+            
+            for ac in aircondsJson{
                 let tempAc = Aircond(id: ac.0,value: ac.1)
+                print("fetch ac...")
                 self.airconds.append(tempAc)
             }
             

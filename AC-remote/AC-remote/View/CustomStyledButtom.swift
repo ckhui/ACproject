@@ -17,13 +17,52 @@ class CustomStyledButtom: UIButton {
 //        self.YellowButtonStyle()
 //    }
     
+    @IBInspectable var mainStyle : Bool = true
+    
     override func awakeFromNib() {
-        YellowButtonStyle()
+        
+        layer.cornerRadius = min(frame.height, frame.width) / 4
+        setBorder()
+        
+        if mainStyle {
+            mainButtonStyle()
+        }else{
+            subButtonStyle()
+        }
     }
     
     override var isEnabled: Bool {
         didSet{
-            isEnabled ? YellowButtonStyle() : disabledYellowButtonStyle()
+            if mainStyle {
+                isEnabled ? mainButtonStyle() : disabledMainButtonStyle()
+            }else{
+                isEnabled ? subButtonStyle() : disabledSubButtonStyle()
+            }
         }
+    }
+    
+    func mainButtonStyle() {
+        self.backgroundColor = Style.mainButtonColor
+        self.tintColor = Style.mainButtonTintColor
+    }
+    
+    func disabledMainButtonStyle(){
+        self.backgroundColor = Style.disabledMainButtonColor
+        self.tintColor = Style.disabledMainButtonTintColor
+    }
+    
+    func subButtonStyle() {
+        self.backgroundColor = Style.subButtonColor
+        self.tintColor = Style.subButtonTintColor
+    }
+    
+    func disabledSubButtonStyle(){
+        self.backgroundColor = Style.disabledSubButtonColor
+        self.tintColor = Style.disabledSubButtonTintColor
+    }
+    
+    func setBorder() {
+        layer.borderWidth = 2
+        layer.borderColor = mainStyle ? Style.mainButtonBorderColor.cgColor : Style.subButtonBorderColor.cgColor
     }
 }

@@ -16,19 +16,13 @@ class Aircond {
     var mode : Mode = .COLD
     var fanSpeed : FanSpeed = .MEDIUM
     var temperature : Int = 20
-    var alias : String = "SomeName"
+    var alias : String = ""
     
     enum Status : Int {
         case ON = 0
         case OFF
         case PENDING
     }
-
-//    enum Status : String {
-//        case ON 
-//        case OFF
-//        case PENDING
-//    }
     
     enum Mode : Int{
         case DRY = 0
@@ -79,11 +73,11 @@ class Aircond {
             switch(_fanSpeed){
             case "AUTO" :
                 fanSpeed = .AUTO
-            case "LOW" :
+            case "1" :
                 fanSpeed = .LOW
-            case "MEDIUM" :
+            case "2" :
                 fanSpeed = .MEDIUM
-            case "HIGH" :
+            case "3" :
                 fanSpeed = .HIGH
             default : break
             }
@@ -137,11 +131,11 @@ class Aircond {
         case .AUTO :
             return "AUTO"
         case .LOW :
-            return "LOW"
+            return "1"
         case .MEDIUM :
-            return "MEDIUM"
+            return "2"
         case .HIGH :
-            return "HIGH"
+            return "3"
         }
     }
         

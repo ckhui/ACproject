@@ -8,9 +8,10 @@
 
 import UIKit
 
-class SettingPageViewController: NEXTViewController {
+class SettingPageViewController: UIViewController {
     
     @IBOutlet weak var domainUrlTextField: UITextField!
+    
     @IBOutlet weak var backButton: UIButton!{
         didSet{
             backButton.addTarget(self, action: #selector(onBackButtonPressed), for: .touchUpInside)
@@ -55,5 +56,8 @@ class SettingPageViewController: NEXTViewController {
         }
     }
     
+    @IBAction func forceLoginPressed(_ sender: Any) {
+        NotificationCenter.appSignIn()
+    }
     
 }

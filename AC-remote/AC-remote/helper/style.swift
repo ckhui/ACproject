@@ -53,18 +53,34 @@ class NEXTViewController: UIViewController {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         imageView.image = logoImage
         imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
         navigationItem.titleView = imageView
     }
+    
 }
 
 class Style {
     
     static let menuBarBGColor = UIColor.black
     static let menuBarTintColor = UIColor.white
-    static let buttonColor = UIColor.yellow
-    static let buttonTintColor = UIColor.black
-    static let disabledButtonColor = UIColor.yellow.withAlphaComponent(0.5)
-    static let disabledButtonTintColor = UIColor.lightGray
+    
+    static let mainButtonColor = UIColor.orange
+    static let mainButtonTintColor = UIColor.black
+    static let mainButtonBorderColor = UIColor.black
+    
+    static let disabledMainButtonColor = UIColor.orange.withAlphaComponent(0.5)
+    static let disabledMainButtonTintColor = UIColor.lightGray
+    
+    
+    static let subButtonColor = UIColor.black
+    static let subButtonTintColor = UIColor.white
+    static let subButtonBorderColor = UIColor.orange
+    
+    static let disabledSubButtonColor = UIColor.black.withAlphaComponent(0.5)
+    static let disabledSubButtonTintColor = UIColor.orange
+    
+    
+    
     static let clockFormat = "hh:mm:ss"
     //"yyyy/MM/dd EEEE \nhh:mm:ss a \nzzzz"
     
@@ -99,21 +115,6 @@ extension UIViewController{
         setNaviBarHeight(height: 80)
         setLogo()
     }
-}
-
-
-extension UIButton {
-    func YellowButtonStyle() {
-        self.backgroundColor = Style.buttonColor
-        self.tintColor = Style.buttonTintColor
-    }
-    
-    func disabledYellowButtonStyle(){
-        self.backgroundColor = Style.disabledButtonColor
-        self.tintColor = Style.disabledButtonTintColor
-    }
-    
-    
 }
 
 
