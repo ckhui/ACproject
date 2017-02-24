@@ -14,9 +14,12 @@ class ImageSegmentedControl: UIControl {
     
     var thumbView = UIView()
     
+    var previousIndex : Int = -1
     var selectedIndex : Int = -1 {
         didSet{
-            displayNewSelectedIndex()
+            deselectIndex(previousIndex)
+            displaySelectedIndex()
+            previousIndex = selectedIndex
         }
     }
     
@@ -29,6 +32,15 @@ class ImageSegmentedControl: UIControl {
     
     var selectedImageNames : [String] = []
     
+    override var isEnabled: Bool {
+        didSet{
+            if isEnabled {
+                displaySelectedIndex()
+            }else{
+                deselectIndex(selectedIndex)
+            }
+        }
+    }
     
     
     override init(frame: CGRect) {
@@ -103,7 +115,6 @@ class ImageSegmentedControl: UIControl {
         }
         
         if calculatedIndex != nil {
-            deselectIndex()
             selectedIndex = calculatedIndex!
             sendActions(for: .valueChanged)
         }
@@ -111,16 +122,19 @@ class ImageSegmentedControl: UIControl {
         return false
     }
     
-    func deselectIndex(){
-        if selectedIndex == -1 {
+    func deselectIndex(_ index : Int){
+        if index == -1 {
             return
         }
         
-        let imageView = imageViews[selectedIndex]
-        imageView.image = UIImage(named: imageNames[selectedIndex])
+        let imageView = imageViews[index]
+        imageView.image = UIImage(named: imageNames[index])
+
     }
     
-    func displayNewSelectedIndex(){
+    
+    
+    func displaySelectedIndex(){
         if selectedIndex == -1 {
             self.thumbView.frame = CGRect.zero
             return

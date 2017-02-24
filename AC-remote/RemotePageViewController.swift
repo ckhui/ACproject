@@ -80,6 +80,8 @@ class RemotePageViewController: UIViewController {
         let center = CGPoint(x: temperatureSlider.thumbCenterX, y: temperatureSlider.frame.height + (tempLabelHeight / 2))
         temperatureImageView.frame = rect
         temperatureImageView.center = center
+        
+        setTemperatureLabel(withTemperature: selectedAircond.temperature)
     }
     
     
@@ -92,13 +94,17 @@ class RemotePageViewController: UIViewController {
             onOffButton.image = UIImage(named: "power-off")
             selectedAircond.status = .ON
         }
+        
+        showAircondValue()
     }
     
     func temperatureSliderChanged(_ slider : UISlider){
         
         //print(slider.value)
         let temp = 16 + Int(round(slider.value * 14))
+        selectedAircond.temperature = temp
         setTemperatureLabel(at: slider.thumbCenterX, withTemperature: temp)
+
         
     }
     
@@ -109,24 +115,26 @@ class RemotePageViewController: UIViewController {
         temperatureImageView.center.x = pointX
     }
     
+    
+    func setTemperatureLabel(withTemperature temp: Int) {
+        let value = Float(temp - 16) / 14.0
+        temperatureSlider.value = value
+        setTemperatureLabel(at: temperatureSlider.thumbCenterX, withTemperature: temp)
+        
+    }
+    
     func showAircondValue() {
         showStatus()
         showMode()
-        showFanspeed()
-        showTemperature()
     }
     
     func showStatus(){
         if selectedAircond.status == .ON {
             onOffButton.image = UIImage(named: "power-on")
             statusLabel.text = "\(selectedAircond.alias) is ON"
-            modeControl.isEnabled = true
-            fanControl .isEnabled = true
         } else {
             onOffButton.image = UIImage(named: "power-off")
             statusLabel.text = "\(selectedAircond.alias) is OFF"
-            modeControl.isEnabled = false
-            fanControl .isEnabled = false
         }
     }
     
@@ -135,31 +143,39 @@ class RemotePageViewController: UIViewController {
         if selectedAircond.status == .ON {
             let modeHash = selectedAircond.mode.hashValue
             modeControl.selectedIndex = modeHash
+            modeControl.isEnabled = true
         }
         else{
             modeControl.selectedIndex = -1
+            modeControl.isEnabled = false
         }
         
         if selectedAircond.mode == .WET {
-            fanControl.isEnabled = false
-            fanControl.deselectIndex()
+            fanControl.isHidden = true
         }else{
-            fanControl.isEnabled = true
-            fanControl.displayNewSelectedIndex()
+            fanControl.isHidden = false
+            fanControl.displaySelectedIndex()
         }
         
         if selectedAircond.mode == .DRY {
-            temperatureSlider.isEnabled = false
+            temperatureSlider.isHidden = true
             temperatureImageView.isHidden = true
         }else{
-            temperatureSlider.isEnabled = true
+            temperatureSlider.isHidden = false
             temperatureImageView.isHidden = false
         }
+        
+        showFanspeed()
+        showTemperature()
     }
     
     
     func showFanspeed() {
-        if selectedAircond.status != .ON || selectedAircond.mode == .WET {
+        if fanControl.isHidden {
+            return
+        }
+        
+        if selectedAircond.status != .ON {
             fanControl.selectedIndex = -1
             return
         }
@@ -174,11 +190,19 @@ class RemotePageViewController: UIViewController {
     }
     
     func showTemperature(){
-        if selectedAircond.status != .ON || selectedAircond.mode == .DRY {
-            temperatureSlider.isEnabled = false
+        if temperatureSlider.isHidden {
             return
         }
-        temperatureSlider.value = Float(selectedAircond.temperature - 16) / 14.0
+        
+        if selectedAircond.status != .ON {
+            temperatureSlider.isEnabled = false
+            temperatureImageView.alpha = 0.5
+        } else{
+            temperatureSlider.isEnabled = true
+            temperatureImageView.alpha = 1.0
+            temperatureSlider.value = Float(selectedAircond.temperature - 16) / 14.0
+        }
+        
     }
     
     
@@ -188,7 +212,6 @@ class RemotePageViewController: UIViewController {
         if let mode = Aircond.Mode(rawValue: modeControl.selectedIndex) {
             selectedAircond.mode = mode
         }
-        
         showMode()
     }
     
@@ -198,7 +221,18 @@ class RemotePageViewController: UIViewController {
             selectedAircond.fanSpeed = speed
             print(speed)
         }
-        
         showFanspeed()
     }
+    
+    @IBOutlet weak var sendButton: UIButton! {
+        didSet{
+            sendButton.addTarget(self, action: #selector(sendButtonAction(_:)), for: .touchUpInside)
+        }
+    }
+    
+    func sendButtonAction(_ sender : UIButton) {
+        sendButton.setTitle("\(sendButton.titleLabel!.text!) x ", for: .normal)
+        dump(selectedAircond)
+    }
+    
 }

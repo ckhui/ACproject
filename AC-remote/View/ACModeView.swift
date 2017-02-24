@@ -13,13 +13,14 @@ import UIKit
 class ACModeView: UIView {
     
 
-    var isEnable : Bool = true {
+    var isEnable : Bool = true{
         didSet{
             if isEnable {
-                self.alpha = 1.0
+                modeIamgeView.alpha = 1.0
+                modeLabel.alpha = 1.0
             }else{
-                //self.view.backgroundColor = UIColor.blue
-                self.alpha = 0.5
+                modeIamgeView.alpha = 0.5
+                modeLabel.alpha = 0.5
             }
         }
     }
@@ -37,21 +38,17 @@ class ACModeView: UIView {
     }
     
     func displayMode(){
-        
-        
-        //mode = Aircond.Mode(rawValue: modeHashValue) ?? .COLD
-        
         var img : UIImage?
         var str : String
         switch mode {
         case .COLD:
-            img = UIImage(named: "mode_cold")
+            img = UIImage(named: ImageName.getModeImageName(mode: .cold, status: .none))
             str = "COLD"
         case .DRY:
-            img = UIImage(named: "mode_dry")
+            img = UIImage(named: ImageName.getModeImageName(mode: .dry, status: .none))
             str = "DRY"
         case .WET:
-            img = UIImage(named: "mode_wet")
+            img = UIImage(named: ImageName.getModeImageName(mode: .wet, status: .none))
             str = "WET"
         }
         

@@ -10,9 +10,10 @@ import UIKit
 
 class ACBoardCollectionViewCell: UICollectionViewCell {
 
+    
     @IBOutlet weak var nameLabel : UILabel!
     
-    @IBOutlet weak var mode: ACModeView!
+    @IBOutlet weak var modeView: ACModeView!
 
     @IBOutlet weak var fanLabel: UILabel!
     
@@ -31,6 +32,11 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        layer.borderWidth = 2.0
+        layer.borderColor = UIColor.black.cgColor
+        //layer.backgroundColor = UIColor.lightGray.cgColor
+        
     }
 
     
@@ -50,21 +56,24 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         showTemperature()
     }
     
+
+    
     func showOnOff(){
         if aircond.status == .ON {
             onOffButton.image = UIImage(named: "power-on")
+            showInfo(true)
         } else {
             onOffButton.image = UIImage(named: "power-off")
+            showInfo(false)
         }
     }
     
     func showMode() {
-        mode.isEnable = (aircond.status == .ON) ? true : false
-        mode.mode = aircond.mode
+        modeView.mode = aircond.mode
     }
     
     func showFanspeed() {
-        if aircond.status != .ON || aircond.mode == .WET
+        if aircond.mode == .WET
         {
             fanLabel.text = ""
             return
@@ -80,13 +89,27 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         }
 
     func showTemperature(){
-        if aircond.temperaturString() == "" {
+        if aircond.mode == .DRY {
             temperatureLabel.text = ""
             tempClabel.isHidden = true
         }
         else{
-            temperatureLabel.text = aircond.temperaturString()
+            temperatureLabel.text = "\(aircond.temperature)"
             tempClabel.isHidden = false
+        }
+    }
+    
+    func showInfo(_ yes : Bool) {
+        if yes {
+            modeView.isEnable = true
+            fanLabel.isEnabled = true
+            temperatureLabel.isEnabled = true
+            tempClabel.isEnabled = true
+        }else{
+            modeView.isEnable = false
+            fanLabel.isEnabled = false
+            temperatureLabel.isEnabled = false
+            tempClabel.isEnabled = false
         }
     }
 }
