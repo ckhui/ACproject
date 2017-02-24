@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ACDashboardViewController: UIViewController {
+class ACDashboardViewController: ACRequestViewController {
     
     var airconds = [Aircond]()
     var boardSize = CGSize()
@@ -55,7 +55,7 @@ extension ACDashboardViewController : UICollectionViewDataSource, UICollectionVi
             else { return UICollectionViewCell() }
         
         cell.showACStatus(airconds[indexPath.row])
-        
+        cell.delegate = self
         return cell
     }
     
@@ -70,5 +70,11 @@ extension ACDashboardViewController : UICollectionViewDataSource, UICollectionVi
         
     }
  
+}
+
+extension ACDashboardViewController : ACBoardCellDelegate {
+    func ACBoardOnOffBtnPressed(aircond: Aircond) {
+        sendChangeStatusRequest(aircond: aircond)
+    }
 }
 

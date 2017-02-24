@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import Alamofire
 
 /*
 protocol LogoProtocol : class {
@@ -158,6 +158,53 @@ extension UIViewController{
         setNaviBarHeight(height: 80)
         setLogo()
     }
+}
+
+class ACRequestViewController : UIViewController {
+    func sendChangeStatusRequest(aircond : Aircond){
+        
+        let url : String = UserDefaults.getDomain()
+        let token : String = UserDefaults.getToken()
+        let username : String = UserDefaults.getName()
+        
+        let urlRequest = url + "app_state/\(aircond.id)"
+        let param : [String:Any] = ["aircond" : ["status":aircond.statusString(), "mode":aircond.modeString(), "fan_speed": aircond.fanspeedString(), "temperature" : aircond.temperaturString()], "app_token" : token, "user_name": username]
+        
+        print(param)
+        Alamofire.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+            
+            var message = "Other Response"
+            let popUpTitle = "Status : \(response.result.description.lowercased())"
+            if response.result.isSuccess {
+                if let returnDict = response.result.value as? [String: String] {
+                    if let returnMessage = returnDict["response"]
+                    {
+                        message = returnMessage
+                        //print(message)
+                        
+                        if message == "Invalid Token"{
+                            self.popUpToLogUserOut()
+                            return
+                        }
+                    }
+                }
+            }
+            self.warningPopUp(withTitle: popUpTitle, withMessage: message)
+        }
+    }
+    
+    func popUpToLogUserOut(){
+        let popUP = UIAlertController(title: "Error", message: "Invalid Token", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .cancel){ (action) in
+            NotificationCenter.appSignOut()
+        }
+        
+        popUP.addAction(okButton)
+        present(popUP, animated: true, completion: nil)
+        
+        
+    }
+
 }
 
 

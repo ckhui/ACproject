@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Alamofire
 
-class RemotePageViewController: UIViewController {
+class RemotePageViewController: ACRequestViewController {
     
     var selectedAircond = Aircond()
     
@@ -233,6 +234,10 @@ class RemotePageViewController: UIViewController {
     func sendButtonAction(_ sender : UIButton) {
         sendButton.setTitle("\(sendButton.titleLabel!.text!) x ", for: .normal)
         dump(selectedAircond)
+        sendChangeStatusRequest(aircond: selectedAircond)
     }
+    
+    
+    
     
 }

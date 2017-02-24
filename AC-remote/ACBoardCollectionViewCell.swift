@@ -10,6 +10,7 @@ import UIKit
 
 class ACBoardCollectionViewCell: UICollectionViewCell {
 
+    var delegate : ACBoardCellDelegate?
     
     @IBOutlet weak var nameLabel : UILabel!
     
@@ -44,6 +45,7 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         aircond.status = aircond.status == .ON  ? .OFF : .ON
         //TODO : sendRequest
         showACStatus(aircond)
+        delegate?.ACBoardOnOffBtnPressed(aircond: aircond)
     }
     
     func showACStatus(_ ac : Aircond) {
@@ -112,4 +114,8 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
             tempClabel.isEnabled = false
         }
     }
+}
+
+protocol ACBoardCellDelegate {
+    func ACBoardOnOffBtnPressed(aircond : Aircond)
 }
