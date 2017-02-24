@@ -162,6 +162,9 @@ extension UIViewController{
 
 class ACRequestViewController : UIViewController {
     
+    let url : String = UserDefaults.getDomain()
+    let token : String = UserDefaults.getToken()
+    let username : String = UserDefaults.getName()
     var loadingBar = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
     
     override func viewDidLoad() {
@@ -177,11 +180,7 @@ class ACRequestViewController : UIViewController {
     func sendChangeStatusRequest(aircond : Aircond){
         loadingBar.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
-        
-        let url : String = UserDefaults.getDomain()
-        let token : String = UserDefaults.getToken()
-        let username : String = UserDefaults.getName()
-        
+    
         let urlRequest = url + "app_state/\(aircond.id)"
         let param : [String:Any] = ["aircond" : ["status":aircond.statusString(), "mode":aircond.modeString(), "fan_speed": aircond.fanspeedString(), "temperature" : aircond.temperaturString()], "app_token" : token, "user_name": username]
         
@@ -200,7 +199,7 @@ class ACRequestViewController : UIViewController {
                         if message == "Invalid Token"{
                             self.loadingBar.stopAnimating()
                             UIApplication.shared.endIgnoringInteractionEvents()
-                            self.popUpToLogUserOut()
+                            self.popUpToLogUserOut(title: "Error", message: message)
                             return
                         }
                     }
@@ -212,13 +211,25 @@ class ACRequestViewController : UIViewController {
         }
     }
     
-    func popUpToLogUserOut(){
-        let popUP = UIAlertController(title: "Error", message: "Invalid Token", preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .cancel){ (action) in
-            NotificationCenter.appSignOut()
+    func popUpToLogUserOut(title: String, message : String,withCancle cancle : Bool = false){
+        let popUP = UIAlertController(title: title , message: message, preferredStyle: .alert)
+        
+        
+        if cancle {
+            let okButton = UIAlertAction(title: "OK", style: .default){ (action) in
+                NotificationCenter.appSignOut()
+            }
+            popUP.addAction(okButton)
+            let cancleButton = UIAlertAction(title: "Cancle", style: .destructive)
+            popUP.addAction(cancleButton)
+        }else{
+            let okButton = UIAlertAction(title: "LOG OUT", style: .destructive){ (action) in
+                NotificationCenter.appSignOut()
+            }
+            popUP.addAction(okButton)
         }
         
-        popUP.addAction(okButton)
+        
         present(popUP, animated: true, completion: nil)
         
         

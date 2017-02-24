@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import SwiftyJSON
+import Firebase
+
 
 class ACDashboardViewController: ACRequestViewController {
     
     var airconds = [Aircond]()
     var boardSize = CGSize()
+    var ref: FIRDatabaseReference!
     
     @IBOutlet weak var boardCollectionView: UICollectionView! {
         didSet{
@@ -24,13 +28,59 @@ class ACDashboardViewController: ACRequestViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initLogoutButton()
+        
+        ref = FIRDatabase.database().reference()
+        airconds = []
+        loadFromFirebase()
         
         let cellWidth = boardCollectionView.frame.width
         let cellHeight = cellWidth / 350 * 150
         boardSize = CGSize(width: cellWidth , height: cellHeight)
         
-        boardCollectionView.reloadData()
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func initLogoutButton(){
+        let button = UIBarButtonItem(title: "LogOut", style: .plain, target: self , action: #selector(logoutUser))
+        button.tintColor = UIColor.white
+        navigationItem.rightBarButtonItem = button
+    }
+    
+    func loadFromFirebase(){
+        
+        ref.observe(.value, with: { (snapshot) in
+            print("fetching data")
+            //print (snapshot.value as Any)
+            guard let value = snapshot.value
+                else { return }
+            let jsonVar = JSON(value)
+            let aircondsJson = jsonVar["airconds"]
+            
+            //print(aircondsJson)
+            self.airconds = []
+            
+            for ac in aircondsJson{
+                let tempAc = Aircond(id: ac.0,value: ac.1)
+                print("fetch ac... \(ac.0)")
+                self.airconds.append(tempAc)
+            }
+            
+            DispatchQueue.main.async {
+                self.sortAircondById()
+                self.boardCollectionView.reloadData()
+            }
+        })
+    }
+    
+    func sortAircondById(){
+        airconds.sort(by: {$0.id < $1.id})
+    }
+    
+    
+    func logoutUser(){
+        popUpToLogUserOut(title: "LogOut", message: "Confirm ?", withCancle : true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
