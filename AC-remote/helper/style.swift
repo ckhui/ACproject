@@ -161,7 +161,22 @@ extension UIViewController{
 }
 
 class ACRequestViewController : UIViewController {
+    
+    var loadingBar = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadingBar.activityIndicatorViewStyle = .gray
+        loadingBar.hidesWhenStopped = true
+        loadingBar.center = view.center
+        loadingBar.backgroundColor = UIColor.gray
+        loadingBar.layer.cornerRadius = loadingBar.frame.width / 4
+        view.addSubview(loadingBar)
+    }
+    
     func sendChangeStatusRequest(aircond : Aircond){
+        loadingBar.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
         let url : String = UserDefaults.getDomain()
         let token : String = UserDefaults.getToken()
@@ -183,12 +198,16 @@ class ACRequestViewController : UIViewController {
                         //print(message)
                         
                         if message == "Invalid Token"{
+                            self.loadingBar.stopAnimating()
+                            UIApplication.shared.endIgnoringInteractionEvents()
                             self.popUpToLogUserOut()
                             return
                         }
                     }
                 }
             }
+            self.loadingBar.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
             self.warningPopUp(withTitle: popUpTitle, withMessage: message)
         }
     }
