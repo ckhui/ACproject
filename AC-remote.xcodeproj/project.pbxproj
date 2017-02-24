@@ -11,6 +11,7 @@
 		56909AAFC4445F8FD3F97687 /* Pods_AC_remoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EFBD19346EF6BF1EB13915B /* Pods_AC_remoteTests.framework */; };
 		5F1309451E5ED16E00E1EFCF /* SliderViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1309441E5ED16E00E1EFCF /* SliderViewExtension.swift */; };
 		5F27174B1E247A56007CE277 /* SettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F27174A1E247A56007CE277 /* SettingPageViewController.swift */; };
+		5F770F051E5FE9B500A260A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F770F041E5FE9B500A260A6 /* GoogleService-Info.plist */; };
 		5FC1289F1E5EA8860032D951 /* ImageSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC1289E1E5EA8860032D951 /* ImageSegmentedControl.swift */; };
 		5FC128A11E5EAA5F0032D951 /* ImageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC128A01E5EAA5F0032D951 /* ImageName.swift */; };
 		828E09FA6A0CCB623943364F /* Pods_AC_remote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C80DC2DBA6A809458D01BAD /* Pods_AC_remote.framework */; };
@@ -26,7 +27,6 @@
 		A15DC55C1E2E0503009BC0A3 /* AircondBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15DC55B1E2E0503009BC0A3 /* AircondBoard.swift */; };
 		A15DC5601E2E0878009BC0A3 /* AircondBoard.xib in Resources */ = {isa = PBXBuildFile; fileRef = A15DC55F1E2E0878009BC0A3 /* AircondBoard.xib */; };
 		A17226091E516C5600FCCAD0 /* ACDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17226081E516C5600FCCAD0 /* ACDashboardViewController.swift */; };
-		A17226601E52DF8700FCCAD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A172265F1E52DF8700FCCAD0 /* GoogleService-Info.plist */; };
 		A18A02D01E1CCA7000D110F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18A02CF1E1CCA7000D110F0 /* AppDelegate.swift */; };
 		A18A02D51E1CCA7000D110F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A18A02D31E1CCA7000D110F0 /* Main.storyboard */; };
 		A18A02D71E1CCA7000D110F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A18A02D61E1CCA7000D110F0 /* Assets.xcassets */; };
@@ -65,6 +65,7 @@
 		2BDAB185E446F7EDAFECE561 /* Pods-AC-remoteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AC-remoteUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AC-remoteUITests/Pods-AC-remoteUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5F1309441E5ED16E00E1EFCF /* SliderViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderViewExtension.swift; sourceTree = "<group>"; };
 		5F27174A1E247A56007CE277 /* SettingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingPageViewController.swift; path = ViewController/SettingPageViewController.swift; sourceTree = "<group>"; };
+		5F770F041E5FE9B500A260A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FC1289E1E5EA8860032D951 /* ImageSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSegmentedControl.swift; sourceTree = "<group>"; };
 		5FC128A01E5EAA5F0032D951 /* ImageName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageName.swift; sourceTree = "<group>"; };
 		6C80DC2DBA6A809458D01BAD /* Pods_AC_remote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AC_remote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,7 +84,6 @@
 		A15DC55B1E2E0503009BC0A3 /* AircondBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AircondBoard.swift; path = View/AircondBoard.swift; sourceTree = "<group>"; };
 		A15DC55F1E2E0878009BC0A3 /* AircondBoard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AircondBoard.xib; sourceTree = "<group>"; };
 		A17226081E516C5600FCCAD0 /* ACDashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACDashboardViewController.swift; sourceTree = "<group>"; };
-		A172265F1E52DF8700FCCAD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A18A02CC1E1CCA7000D110F0 /* AC-remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AC-remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A18A02CF1E1CCA7000D110F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A18A02D41E1CCA7000D110F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -246,10 +246,10 @@
 		A1E644151E2C7CA30087C72A /* SupportingFile */ = {
 			isa = PBXGroup;
 			children = (
+				5F770F041E5FE9B500A260A6 /* GoogleService-Info.plist */,
 				A18A02D61E1CCA7000D110F0 /* Assets.xcassets */,
 				A18A02D81E1CCA7000D110F0 /* LaunchScreen.storyboard */,
 				A18A02DB1E1CCA7000D110F0 /* Info.plist */,
-				A172265F1E52DF8700FCCAD0 /* GoogleService-Info.plist */,
 			);
 			name = SupportingFile;
 			sourceTree = "<group>";
@@ -399,7 +399,7 @@
 				A15DC5601E2E0878009BC0A3 /* AircondBoard.xib in Resources */,
 				A18A02D71E1CCA7000D110F0 /* Assets.xcassets in Resources */,
 				A18A02D51E1CCA7000D110F0 /* Main.storyboard in Resources */,
-				A17226601E52DF8700FCCAD0 /* GoogleService-Info.plist in Resources */,
+				5F770F051E5FE9B500A260A6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
