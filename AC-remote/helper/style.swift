@@ -88,6 +88,14 @@ extension UIColor {
     
     static let lightBlue = UIColor(hexString: "#5ac8faff") ?? UIColor.clear
     static let darkBlue = UIColor(hexString: "#056f9fff") ?? UIColor.clear
+    
+    static let backgroundColor = UIColor(hexString: "#073642ff") ?? UIColor.clear
+    
+    static let customeGreen = UIColor(hexString: "#2aa198 ff") ?? UIColor.clear
+    
+    static let customeYellow = UIColor(hexString: "#EDB83Dff") ?? UIColor.clear
+    
+    
 }
 
 class Style {
@@ -95,21 +103,24 @@ class Style {
     static let menuBarBGColor = UIColor.lightBlue
     static let menuBarTintColor = UIColor.white
     
-    static let mainButtonColor = UIColor.lightBlue
+    
+    static let mainButtonColor = UIColor.customeGreen
     static let mainButtonTintColor = UIColor.white
-    static let mainButtonBorderColor = UIColor.darkBlue
+    static let mainButtonBorderColor = UIColor.customeGreen
     
-    static let disabledMainButtonColor = UIColor.lightBlue.withAlphaComponent(0.5)
+    static let disabledMainButtonColor = UIColor.customeGreen.withAlphaComponent(0.5)
     static let disabledMainButtonTintColor = UIColor.lightGray
-    static let disabledMainButtonBorderColor = UIColor.darkBlue.withAlphaComponent(0.5)
+    static let disabledMainButtonBorderColor = UIColor.customeGreen.withAlphaComponent(0.5)
     
-    static let subButtonColor = UIColor.white
-    static let subButtonTintColor = UIColor.lightBlue
-    static let subButtonBorderColor = UIColor.lightBlue
+    static let subButtonColor = UIColor.customeYellow
+    static let subButtonTintColor = UIColor.black
+    static let subButtonBorderColor = UIColor.customeYellow
     
-    static let disabledSubButtonColor = UIColor.white
+    static let disabledSubButtonColor = UIColor.customeYellow.withAlphaComponent(0.5)
+
     static let disabledSubButtonTintColor = UIColor.lightGray
-    static let disabledSubButtonBorderColor = UIColor.lightGray
+    static let disabledSubButtonBorderColor = UIColor.customeYellow.withAlphaComponent(0.5)
+
     
     
     

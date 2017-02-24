@@ -77,6 +77,7 @@ class DashboardViewController: UIViewController {
             for ac in aircondsJson{
                 let tempAc = Aircond(id: ac.0,value: ac.1)
                 print("fetch ac...")
+                print(ac.0)
                 self.airconds.append(tempAc)
             }
             

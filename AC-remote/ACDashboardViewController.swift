@@ -25,12 +25,21 @@ class ACDashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let cellWidth = boardCollectionView.frame.width / 2
-        let cellHeight = cellWidth / 180 * 150
+        let cellWidth = boardCollectionView.frame.width
+        let cellHeight = cellWidth / 350 * 150
         boardSize = CGSize(width: cellWidth , height: cellHeight)
         
         boardCollectionView.reloadData()
         // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toRemotePage" {
+            if let VC =  segue.destination  as? RemotePageViewController,
+                let indexPath = sender as? IndexPath {
+                VC.selectedAircond = airconds[indexPath.row]
+            }
+        }
     }
     
 }
@@ -52,6 +61,13 @@ extension ACDashboardViewController : UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return boardSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+        
+        performSegue(withIdentifier: "toRemotePage", sender: indexPath)
+        
     }
  
 }

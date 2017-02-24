@@ -73,7 +73,7 @@ class TestViewController: UIViewController {
             print(response.result.value as Any)   // result of response serialization
         }
     }
-    @IBAction func validateBtnPressed(_ sender: Any) {
+    @IBAction func validateBtnPressed( ) {
             let urlRequest = url + "validate_token/"
             
             guard let name = nameTF.text,
