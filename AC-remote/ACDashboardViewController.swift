@@ -50,7 +50,7 @@ class ACDashboardViewController: ACRequestViewController {
     
     func loadFromFirebase(){
         
-        ref.observe(.value, with: { (snapshot) in
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
             print("fetching data")
             //print (snapshot.value as Any)
             guard let value = snapshot.value
@@ -72,12 +72,30 @@ class ACDashboardViewController: ACRequestViewController {
                 self.boardCollectionView.reloadData()
             }
         })
+        
+        ref.child("airconds").observe(.childChanged, with: { (snapshot) in
+            
+            guard let value = snapshot.value
+                else { return }
+            
+            let json = JSON(value)
+            let updatedAc = Aircond(id: snapshot.key, value: json)
+            self.updateAircond(ac : updatedAc)
+        })
     }
     
     func sortAircondById(){
         airconds.sort(by: {$0.id < $1.id})
     }
     
+    func updateAircond(ac : Aircond){
+        let index = airconds.index { $0.id == ac.id }
+        if let index = index {
+            airconds[index] = ac
+            let indexPath = IndexPath(item: index, section: 0)
+            boardCollectionView.reloadItems(at: [indexPath])
+        }
+    }
     
     func logoutUser(){
         popUpToLogUserOut(title: "LogOut", message: "Confirm ?", withCancle : true)

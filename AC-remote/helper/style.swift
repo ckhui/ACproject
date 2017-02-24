@@ -91,9 +91,9 @@ extension UIColor {
     
     static let backgroundColor = UIColor(hexString: "#073642ff") ?? UIColor.clear
     
-    static let customeGreen = UIColor(hexString: "#2aa198 ff") ?? UIColor.clear
+    static let customeGreen = UIColor(hexString: "#2aa198ff") ?? UIColor.clear
     
-    static let customeYellow = UIColor(hexString: "#EDB83Dff") ?? UIColor.clear
+    static let customeYellow = UIColor(hexString: "#edb83dff") ?? UIColor.clear
     
     
 }
