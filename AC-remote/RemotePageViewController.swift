@@ -231,8 +231,10 @@ class RemotePageViewController: ACRequestViewController {
         }
     }
     
+    var count = 0
     func sendButtonAction(_ sender : UIButton) {
-        sendButton.setTitle("\(sendButton.titleLabel!.text!) x ", for: .normal)
+        count += 1
+        sendButton.setTitle("\(sendButton.titleLabel!.text!)  \(count)", for: .normal)
         dump(selectedAircond)
         sendChangeStatusRequest(aircond: selectedAircond)
     }
