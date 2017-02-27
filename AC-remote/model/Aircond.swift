@@ -38,9 +38,7 @@ class Aircond {
     }
     
     
-    init() {
-        
-    }
+    init() {}
     
     init (id : String, value : JSON){
         
@@ -91,6 +89,19 @@ class Aircond {
             alias = _alias
         }
 
+    }
+    
+    
+    func copy() -> Aircond {
+        let copy = Aircond()
+        copy.id = id
+        copy.status = status
+        copy.mode = mode
+        copy.fanSpeed = fanSpeed
+        copy.temperature = temperature
+        copy.alias = alias
+        
+        return copy
     }
     
     

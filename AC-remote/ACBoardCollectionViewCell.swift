@@ -42,10 +42,9 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
 
     
     func handleOnOffButtonTapped(){
-        aircond.status = aircond.status == .ON  ? .OFF : .ON
-        //TODO : sendRequest
-        showACStatus(aircond)
-        delegate?.ACBoardOnOffBtnPressed(aircond: aircond)
+        let ac = aircond.copy()
+        ac.status = ac.status == .ON  ? .OFF : .ON
+        delegate?.ACBoardOnOffBtnPressed(aircond: ac)
     }
     
     func showACStatus(_ ac : Aircond) {

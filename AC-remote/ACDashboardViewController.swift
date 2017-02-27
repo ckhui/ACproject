@@ -105,7 +105,7 @@ class ACDashboardViewController: ACRequestViewController {
         if segue.identifier == "toRemotePage" {
             if let VC =  segue.destination  as? RemotePageViewController,
                 let indexPath = sender as? IndexPath {
-                VC.selectedAircond = airconds[indexPath.row]
+                VC.selectedAircond = airconds[indexPath.row].copy()
             }
         }
     }
@@ -142,6 +142,7 @@ extension ACDashboardViewController : UICollectionViewDataSource, UICollectionVi
 
 extension ACDashboardViewController : ACBoardCellDelegate {
     func ACBoardOnOffBtnPressed(aircond: Aircond) {
+        //TODO : only diable selected cell will sending request
         sendChangeStatusRequest(aircond: aircond)
     }
 }
