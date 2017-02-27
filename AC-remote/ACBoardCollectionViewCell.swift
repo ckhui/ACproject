@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ACBoardCollectionViewCell: UICollectionViewCell {
 
@@ -44,7 +45,8 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
     func handleOnOffButtonTapped(){
         let ac = aircond.copy()
         ac.status = ac.status == .ON  ? .OFF : .ON
-        delegate?.ACBoardOnOffBtnPressed(aircond: ac)
+        //delegate?.ACBoardOnOffBtnPressed(aircond: ac)
+        sentOnOffRequest(ac : ac)
     }
     
     func showACStatus(_ ac : Aircond) {
@@ -111,6 +113,42 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
             fanLabel.isEnabled = false
             temperatureLabel.isEnabled = false
             tempClabel.isEnabled = false
+        }
+    }
+    
+    var task : DataRequest!
+    
+    func sentOnOffRequest(ac : Aircond){
+        
+        self.backgroundColor = UIColor.green
+        
+        let url : String = UserDefaults.getDomain()
+        let token : String = UserDefaults.getToken()
+        let username : String = UserDefaults.getName()
+        
+        let urlRequest = url + "app_state/\(aircond.id)"
+        let param : [String:Any] = ["aircond" : ["status":ac.statusString(), "mode":ac.modeString(), "fan_speed": ac.fanspeedString(), "temperature" : ac.temperaturString()], "app_token" : token, "user_name": username]
+        
+        task = Alamofire.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil)
+        task.responseJSON { response in
+            
+            var message = "Other Response"
+            let popUpTitle = "Status : \(response.result.description.lowercased())"
+            if response.result.isSuccess {
+                if let returnDict = response.result.value as? [String: String] {
+                    if let returnMessage = returnDict["response"]
+                    {
+                        message = returnMessage
+                        //print(message)
+                        
+                        if message == "Invalid Token"{
+                             self.backgroundColor = UIColor.clear
+                            return
+                        }
+                    }
+                }
+            }
+             self.backgroundColor = UIColor.red
         }
     }
 }

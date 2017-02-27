@@ -47,6 +47,8 @@ class ACRequestViewController : UIViewController {
     let token : String = UserDefaults.getToken()
     let username : String = UserDefaults.getName()
     var loadingBar = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
+    let manager = Alamofire.SessionManager.default
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +58,8 @@ class ACRequestViewController : UIViewController {
         loadingBar.backgroundColor = UIColor.gray
         loadingBar.layer.cornerRadius = loadingBar.frame.width / 4
         view.addSubview(loadingBar)
+        
+        manager.session.configuration.timeoutIntervalForRequest = 3
     }
     
     func sendChangeStatusRequest(aircond : Aircond){
@@ -66,7 +70,8 @@ class ACRequestViewController : UIViewController {
         let param : [String:Any] = ["aircond" : ["status":aircond.statusString(), "mode":aircond.modeString(), "fan_speed": aircond.fanspeedString(), "temperature" : aircond.temperaturString()], "app_token" : token, "user_name": username]
         
         print(param)
-        Alamofire.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+        
+        manager.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
             
             var message = "Other Response"
             let popUpTitle = "Status : \(response.result.description.lowercased())"
@@ -91,6 +96,10 @@ class ACRequestViewController : UIViewController {
             self.warningPopUp(withTitle: popUpTitle, withMessage: message)
         }
     }
+    
+//    func cancelREquest(){
+//        Alamofire.request(<#T##url: URLConvertible##URLConvertible#>, method: <#T##HTTPMethod#>, parameters: <#T##Parameters?#>, encoding: <#T##ParameterEncoding#>, headers: <#T##HTTPHeaders?#>)
+//    }
     
     func popUpToLogUserOut(title: String, message : String,withCancle cancle : Bool = false){
         let popUP = UIAlertController(title: title , message: message, preferredStyle: .alert)

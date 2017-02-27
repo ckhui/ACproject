@@ -54,6 +54,7 @@ class LoginViewController: NEXTViewController {
         if UserDefaults.getName() != "" && isUrlValid {
             validateUser(username: UserDefaults.getName() , token: token)
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

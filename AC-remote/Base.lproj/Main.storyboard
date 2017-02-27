@@ -24,18 +24,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2nd-v5-Apg" customClass="CustomStyledButtom" customModule="AC_remote" customModuleProvider="target">
-                                <rect key="frame" x="239" y="607" width="100" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <state key="normal" title="Setting"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="mainStyle" value="NO"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="YBG-TZ-bKh" kind="show" identifier="toSettingPage" id="zSh-hT-iMP"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rkr-ss-Y82" customClass="CustomStyledButtom" customModule="AC_remote" customModuleProvider="target">
                                 <rect key="frame" x="36" y="359" width="248" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -95,11 +83,26 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2nd-v5-Apg" customClass="CustomStyledButtom" customModule="AC_remote" customModuleProvider="target">
+                                <rect key="frame" x="232" y="508" width="52" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="TwS-cC-Ysj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Setting"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="mainStyle" value="NO"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="YBG-TZ-bKh" kind="show" identifier="toSettingPage" id="zSh-hT-iMP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="taB-Oc-T61" firstAttribute="leading" secondItem="97P-fh-EKU" secondAttribute="leading" id="3ka-z1-YS1"/>
                             <constraint firstItem="taB-Oc-T61" firstAttribute="height" secondItem="fqO-gn-I8M" secondAttribute="height" id="5V5-e0-TJ1"/>
+                            <constraint firstItem="L3p-oT-meC" firstAttribute="top" secondItem="2nd-v5-Apg" secondAttribute="bottom" constant="20" id="66a-U1-Mwi"/>
                             <constraint firstItem="JBx-bb-2zp" firstAttribute="top" secondItem="taB-Oc-T61" secondAttribute="bottom" constant="20" id="9pm-5B-yBR"/>
                             <constraint firstItem="rkr-ss-Y82" firstAttribute="height" secondItem="taB-Oc-T61" secondAttribute="height" id="Q41-dN-JWC"/>
                             <constraint firstItem="rkr-ss-Y82" firstAttribute="top" secondItem="JBx-bb-2zp" secondAttribute="bottom" constant="10" id="S7Y-3T-9r3"/>
@@ -111,6 +114,7 @@
                             <constraint firstItem="taB-Oc-T61" firstAttribute="centerY" secondItem="8xG-9H-EBF" secondAttribute="centerY" id="eAR-bX-Uys"/>
                             <constraint firstItem="taB-Oc-T61" firstAttribute="top" secondItem="97P-fh-EKU" secondAttribute="bottom" constant="35" id="qFi-bv-Svn"/>
                             <constraint firstItem="rkr-ss-Y82" firstAttribute="leading" secondItem="97P-fh-EKU" secondAttribute="leading" id="ubV-WI-zdS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2nd-v5-Apg" secondAttribute="trailing" constant="20" id="w9y-J8-IMc"/>
                             <constraint firstItem="JBx-bb-2zp" firstAttribute="centerX" secondItem="8xG-9H-EBF" secondAttribute="centerX" id="wpe-Nb-zhZ"/>
                         </constraints>
                     </view>
@@ -154,7 +158,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cus-on-F7j">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cus-on-F7j">
                                 <rect key="frame" x="131" y="178" width="58.5" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="12I-9A-pWE"/>
@@ -163,7 +167,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20J-li-grs">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20J-li-grs">
                                 <rect key="frame" x="141.5" y="298" width="37.5" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="3s4-Wg-qgM"/>
@@ -175,7 +179,7 @@
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="gmp-hZ-867">
                                 <rect key="frame" x="34" y="448" width="252" height="31"/>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41D-LP-h1D">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41D-LP-h1D">
                                 <rect key="frame" x="95.5" y="413" width="129.5" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="VGO-lh-akW"/>

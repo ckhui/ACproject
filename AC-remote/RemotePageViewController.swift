@@ -57,6 +57,8 @@ class RemotePageViewController: ACRequestViewController {
     @IBOutlet weak var temperatureSlider: UISlider!{
         didSet{
             temperatureSlider.addTarget(self, action: #selector(temperatureSliderChanged(_:)), for: .valueChanged)
+            temperatureSlider.addTarget(self, action: #selector(temperatureSliderEnd(_:)), for: .touchUpInside)
+            temperatureSlider.addTarget(self, action: #selector(temperatureSliderEnd(_:)), for: .touchUpOutside)
         }
     }
     
@@ -66,11 +68,26 @@ class RemotePageViewController: ACRequestViewController {
         }
     }
     
+    
+    
+    var tempCenterView = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTemperatureLabel()
         showAircondValue()
         
+        
+        tempCenterView = UILabel(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        tempCenterView.center = view.center
+        tempCenterView.layer.cornerRadius = tempCenterView.frame.width / 4
+        tempCenterView.layer.masksToBounds = true
+        tempCenterView.textAlignment = .center
+        tempCenterView.baselineAdjustment = .alignCenters
+        tempCenterView.adjustsFontSizeToFitWidth = true
+        tempCenterView.backgroundColor = UIColor.lightGray
+        tempCenterView.isHidden = true
+        view.addSubview(tempCenterView)
     }
     
     func setupTemperatureLabel(){
@@ -98,16 +115,26 @@ class RemotePageViewController: ACRequestViewController {
         
         showAircondValue()
     }
+
     
     func temperatureSliderChanged(_ slider : UISlider){
         
-        //print(slider.value)
         let temp = 16 + Int(round(slider.value * 14))
+        
+        tempCenterView.isHidden = false
+        tempCenterView.text = "\(temp)ºC"
+        
         selectedAircond.temperature = temp
         setTemperatureLabel(at: slider.thumbCenterX, withTemperature: temp)
 
         
     }
+    func temperatureSliderEnd(_ slider : UISlider){
+        UIView.animate(withDuration: 0.1, delay: 0.5, options: .curveLinear, animations: { 
+            self.tempCenterView.isHidden = true
+        }, completion: nil)
+    }
+
     
     func setTemperatureLabel(at pointX : CGFloat,withTemperature temperature : Int) {
         let image = UIImage(named: ImageName.getTemperatureImageName(temperatue: temperature))
