@@ -78,7 +78,7 @@ extension AppDelegate
         //this will call when user logout successfully
         let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "LoginNavigationController")
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController")
         
         window?.rootViewController = viewController
     }

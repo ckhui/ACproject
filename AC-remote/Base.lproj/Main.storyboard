@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="W99-OX-pwk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="osf-Ll-ePJ">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -15,7 +15,7 @@
         <!--Login View Controller-->
         <scene sceneID="SO8-Jl-YIt">
             <objects>
-                <viewController id="osf-Ll-ePJ" customClass="LoginViewController" customModule="AC_remote" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="osf-Ll-ePJ" customClass="LoginViewController" customModule="AC_remote" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dgp-kb-bC0"/>
                         <viewControllerLayoutGuide type="bottom" id="L3p-oT-meC"/>
@@ -531,7 +531,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pSU-ah-Ww4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2331" y="-168"/>
+            <point key="canvasLocation" x="2331" y="-101"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="2Qj-eB-bPm">
@@ -601,8 +601,8 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="bNq-Ea-SGS" firstAttribute="centerY" secondItem="Si1-YU-i9u" secondAttribute="centerY" id="Nm9-VJ-Kuo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bNq-Ea-SGS" secondAttribute="trailing" id="PLo-Tn-EEe"/>
-                            <constraint firstItem="bNq-Ea-SGS" firstAttribute="top" secondItem="sKK-vl-Lb4" secondAttribute="bottom" constant="100" id="fM4-vb-PeJ"/>
                             <constraint firstItem="bNq-Ea-SGS" firstAttribute="leading" secondItem="Si1-YU-i9u" secondAttribute="leadingMargin" id="xDY-t9-PCT"/>
                         </constraints>
                     </view>
@@ -637,24 +637,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZEm-iP-BG0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1545" y="543"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="f5H-6V-yV8">
-            <objects>
-                <navigationController storyboardIdentifier="LoginNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="W3S-Ak-tgO" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3m2-Rp-HqP">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="osf-Ll-ePJ" kind="relationship" relationship="rootViewController" id="VEa-Ah-EUG"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cj7-4g-bAu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1545" y="-871"/>
         </scene>
     </scenes>
     <resources>

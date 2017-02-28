@@ -47,7 +47,7 @@ class ACRequestViewController : UIViewController {
     let token : String = UserDefaults.getToken()
     let username : String = UserDefaults.getName()
     var loadingBar = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
-    let manager = Alamofire.SessionManager.default
+    var manager = Alamofire.SessionManager.default
     
     
     override func viewDidLoad() {
@@ -59,7 +59,12 @@ class ACRequestViewController : UIViewController {
         loadingBar.layer.cornerRadius = loadingBar.frame.width / 4
         view.addSubview(loadingBar)
         
-        manager.session.configuration.timeoutIntervalForRequest = 3
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 5
+        configuration.timeoutIntervalForResource = 5
+        manager = Alamofire.SessionManager(configuration: configuration)
+//        manager.session.configuration.timeoutIntervalForRequest = 3
+//        manager.session.configuration.timeoutIntervalForResource = 3
     }
     
     func sendChangeStatusRequest(aircond : Aircond){
@@ -75,13 +80,15 @@ class ACRequestViewController : UIViewController {
             
             var message = "Other Response"
             let popUpTitle = "Status : \(response.result.description.lowercased())"
-            if response.result.isSuccess {
-                if let returnDict = response.result.value as? [String: String] {
+            
+            switch (response.result) {
+            case .success(let value):
+                
+                if let returnDict = value as? [String: String] {
                     if let returnMessage = returnDict["response"]
                     {
                         message = returnMessage
                         //print(message)
-                        
                         if message == "Invalid Token"{
                             self.loadingBar.stopAnimating()
                             UIApplication.shared.endIgnoringInteractionEvents()
@@ -90,7 +97,15 @@ class ACRequestViewController : UIViewController {
                         }
                     }
                 }
+                break
+            case .failure(let error):
+                if error._code == NSURLErrorTimedOut {
+                    message = error.localizedDescription
+                }else {
+                    message = "Other Error"
+                }
             }
+            
             self.loadingBar.stopAnimating()
             UIApplication.shared.endIgnoringInteractionEvents()
             self.warningPopUp(withTitle: popUpTitle, withMessage: message)

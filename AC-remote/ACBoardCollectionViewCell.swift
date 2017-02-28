@@ -10,18 +10,18 @@ import UIKit
 import Alamofire
 
 class ACBoardCollectionViewCell: UICollectionViewCell {
-
+    
     var delegate : ACBoardCellDelegate?
     
     @IBOutlet weak var nameLabel : UILabel!
     
     @IBOutlet weak var modeView: ACModeView!
-
+    
     @IBOutlet weak var fanLabel: UILabel!
     
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var tempClabel: UILabel!
-
+    
     @IBOutlet weak var onOffButton: UIImageView!{
         didSet{
             onOffButton.isUserInteractionEnabled = true
@@ -31,6 +31,8 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
     }
     
     var aircond = Aircond()
+    var loadingIndicator = UIActivityIndicatorView()
+    var isLoadingSetup = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,8 +41,15 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         layer.borderColor = UIColor.black.cgColor
         //layer.backgroundColor = UIColor.lightGray.cgColor
         
+        loadingIndicator.frame = CGRect.zero
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.alpha = 0.5
+        loadingIndicator.backgroundColor = UIColor.lightGray
+        self.addSubview(loadingIndicator)
+        
     }
-
+    
+    
     
     func handleOnOffButtonTapped(){
         let ac = aircond.copy()
@@ -59,7 +68,7 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         showTemperature()
     }
     
-
+    
     
     func showOnOff(){
         if aircond.status == .ON {
@@ -85,12 +94,12 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         let fanHashValue = aircond.fanSpeed.hashValue
         if fanHashValue == 0 {
             fanLabel.text = "AUTO"
-
+            
         } else {
             fanLabel.text = String(fanHashValue)
-            }
         }
-
+    }
+    
     func showTemperature(){
         if aircond.mode == .DRY {
             temperatureLabel.text = ""
@@ -117,10 +126,10 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
     }
     
     var task : DataRequest!
+    var manager = Alamofire.SessionManager.default
     
     func sentOnOffRequest(ac : Aircond){
-        
-        self.backgroundColor = UIColor.green
+        requestStart()
         
         let url : String = UserDefaults.getDomain()
         let token : String = UserDefaults.getToken()
@@ -129,7 +138,13 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         let urlRequest = url + "app_state/\(aircond.id)"
         let param : [String:Any] = ["aircond" : ["status":ac.statusString(), "mode":ac.modeString(), "fan_speed": ac.fanspeedString(), "temperature" : ac.temperaturString()], "app_token" : token, "user_name": username]
         
-        task = Alamofire.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil)
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 3
+        configuration.timeoutIntervalForResource = 3
+        manager = Alamofire.SessionManager(configuration: configuration)
+        
+        task = manager.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil)
         task.responseJSON { response in
             
             var message = "Other Response"
@@ -142,15 +157,56 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
                         //print(message)
                         
                         if message == "Invalid Token"{
-                             self.backgroundColor = UIColor.clear
+                            
+                            self.requestEnd()
                             return
                         }
                     }
                 }
             }
-             self.backgroundColor = UIColor.red
+            self.requestEnd()
+            
         }
     }
+    
+    
+    func requestStart() {
+        if !isLoadingSetup {
+            setUpLoadingIndicator()
+        }
+        self.isUserInteractionEnabled = false
+        loadingIndicator.startAnimating()
+        //self.backgroundColor = UIColor.green
+    }
+    
+    
+    func setUpLoadingIndicator() {
+        
+//        let width = onOffButton.frame.width
+//        let height = onOffButton.frame.height
+//        let size = min(width,height)
+//        let centerY = onOffButton.frame.midY
+//        let centerX = onOffButton.frame.midX
+//        
+//        loadingIndicator.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: size, height: size))
+//        loadingIndicator.center = CGPoint(x: centerX, y: centerY)
+//        loadingIndicator.layer.cornerRadius = min(onOffButton.frame.width, onOffButton.frame.height) / 4
+        
+        loadingIndicator.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
+        loadingIndicator.layer.cornerRadius = min(frame.width, frame.height) / 4
+        
+        isLoadingSetup = true
+        
+    }
+    func requestEnd() {
+        self.isUserInteractionEnabled = true
+        loadingIndicator.stopAnimating()
+        //self.backgroundColor = UIColor.clear
+    }
+    
+    
+    
+    
 }
 
 protocol ACBoardCellDelegate {
