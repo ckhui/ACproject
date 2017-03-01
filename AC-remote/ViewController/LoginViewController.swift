@@ -9,7 +9,10 @@
 import UIKit
 import Alamofire
 
-class LoginViewController: NEXTViewController {
+class LoginViewController: UIViewController {
+    
+    @IBOutlet weak var logoImageView: UIImageView!
+    
     
     @IBOutlet weak var signInButton: UIButton!{
         didSet {signInButton.addTarget(self, action: #selector(onSignInButtonPressed) , for: .touchUpInside) } }
@@ -47,6 +50,12 @@ class LoginViewController: NEXTViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initNaviBar()
+        
+        view.backgroundColor = UIColor.backgroundColor
+        //usernameTextField.placeHolderColor = UIColor(white: 0.8, alpha: 0.5)
+        //usernameTextField.textColor = UIColor.white
+        //passwordTextField.placeHolderColor = UIColor(white: 0.8, alpha: 0.5)
+        //passwordTextField.textColor = UIColor.white
         
         checkForValidDomainUrl()
         
@@ -192,8 +201,10 @@ class LoginViewController: NEXTViewController {
         if segue.identifier == "toSignUpPage" {
             guard let destination = segue.destination as? SignUpViewController
                 else { return }
+            destination.imageHeight = logoImageView.frame.height
             destination.savedUsername = usernameTextField.text
             destination.url = url
+            
             return
         }
         else if segue.identifier == "toSettingPage" {

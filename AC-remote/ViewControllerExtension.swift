@@ -63,8 +63,6 @@ class ACRequestViewController : UIViewController {
         configuration.timeoutIntervalForRequest = 5
         configuration.timeoutIntervalForResource = 5
         manager = Alamofire.SessionManager(configuration: configuration)
-//        manager.session.configuration.timeoutIntervalForRequest = 3
-//        manager.session.configuration.timeoutIntervalForResource = 3
     }
     
     func sendChangeStatusRequest(aircond : Aircond){
@@ -112,9 +110,6 @@ class ACRequestViewController : UIViewController {
         }
     }
     
-//    func cancelREquest(){
-//        Alamofire.request(<#T##url: URLConvertible##URLConvertible#>, method: <#T##HTTPMethod#>, parameters: <#T##Parameters?#>, encoding: <#T##ParameterEncoding#>, headers: <#T##HTTPHeaders?#>)
-//    }
     
     func popUpToLogUserOut(title: String, message : String,withCancle cancle : Bool = false){
         let popUP = UIAlertController(title: title , message: message, preferredStyle: .alert)
@@ -139,6 +134,8 @@ class ACRequestViewController : UIViewController {
         
         
     }
+    
+    
     
 }
 

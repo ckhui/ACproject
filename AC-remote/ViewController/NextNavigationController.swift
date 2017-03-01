@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NextNavigationController: NEXTViewController {
+class NextNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

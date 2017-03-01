@@ -16,6 +16,9 @@ class SignUpViewController: UIViewController {
     var url = ""
     var savedUsername : String?
     
+    @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
+    var imageHeight : CGFloat = 150
+    
     @IBOutlet weak var usernameTextField: UITextField!
     
     @IBOutlet weak var passwordTextField: UITextField!
@@ -56,10 +59,13 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameTextField.text = savedUsername
+        
+        view.backgroundColor = UIColor.backgroundColor
+        imageViewHeight.constant = imageHeight
     }
     
     func onBackButtonPressed(){
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
     
     func onSignUpButtonPressed(){

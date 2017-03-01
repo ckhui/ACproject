@@ -66,7 +66,7 @@ class Style {
     // timeout for request
     // allow cancle request
     
-    static let menuBarBGColor = UIColor.lightBlue
+    static let menuBarBGColor = UIColor.backgroundColor
     static let menuBarTintColor = UIColor.white
     
     
@@ -97,6 +97,16 @@ class Style {
 
 
 
+extension UITextField{
+    @IBInspectable var placeHolderColor: UIColor? {
+        get {
+            return self.placeHolderColor
+        }
+        set {
+            self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[NSForegroundColorAttributeName: newValue!])
+        }
+    }
+}
 
 
 

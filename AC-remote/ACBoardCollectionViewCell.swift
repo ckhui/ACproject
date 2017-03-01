@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire
+//import Alamofire
 
 class ACBoardCollectionViewCell: UICollectionViewCell {
     
@@ -34,6 +34,8 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
     var loadingIndicator = UIActivityIndicatorView()
     var isLoadingSetup = false
     
+    var indexPath : IndexPath!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -55,7 +57,8 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         let ac = aircond.copy()
         ac.status = ac.status == .ON  ? .OFF : .ON
         //delegate?.ACBoardOnOffBtnPressed(aircond: ac)
-        sentOnOffRequest(ac : ac)
+        delegate?.ACBoardOnOffBtnPressed(indexPath: indexPath)
+        //sentOnOffRequest(ac : ac)
     }
     
     func showACStatus(_ ac : Aircond) {
@@ -125,59 +128,57 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var task : DataRequest!
-    var manager = Alamofire.SessionManager.default
     
-    func sentOnOffRequest(ac : Aircond){
-        requestStart()
-        
-        let url : String = UserDefaults.getDomain()
-        let token : String = UserDefaults.getToken()
-        let username : String = UserDefaults.getName()
-        
-        let urlRequest = url + "app_state/\(aircond.id)"
-        let param : [String:Any] = ["aircond" : ["status":ac.statusString(), "mode":ac.modeString(), "fan_speed": ac.fanspeedString(), "temperature" : ac.temperaturString()], "app_token" : token, "user_name": username]
-        
-        
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 3
-        configuration.timeoutIntervalForResource = 3
-        manager = Alamofire.SessionManager(configuration: configuration)
-        
-        task = manager.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil)
-        task.responseJSON { response in
-            
-            var message = "Other Response"
-            let popUpTitle = "Status : \(response.result.description.lowercased())"
-            if response.result.isSuccess {
-                if let returnDict = response.result.value as? [String: String] {
-                    if let returnMessage = returnDict["response"]
-                    {
-                        message = returnMessage
-                        //print(message)
-                        
-                        if message == "Invalid Token"{
-                            
-                            self.requestEnd()
-                            return
-                        }
-                    }
-                }
-            }
-            self.requestEnd()
-            
-        }
-    }
-    
-    
-    func requestStart() {
-        if !isLoadingSetup {
-            setUpLoadingIndicator()
-        }
-        self.isUserInteractionEnabled = false
-        loadingIndicator.startAnimating()
-        //self.backgroundColor = UIColor.green
-    }
+//    func sentOnOffRequest(ac : Aircond){
+//        requestStart()
+//        
+//        let url : String = UserDefaults.getDomain()
+//        let token : String = UserDefaults.getToken()
+//        let username : String = UserDefaults.getName()
+//        
+//        let urlRequest = url + "app_state/\(aircond.id)"
+//        let param : [String:Any] = ["aircond" : ["status":ac.statusString(), "mode":ac.modeString(), "fan_speed": ac.fanspeedString(), "temperature" : ac.temperaturString()], "app_token" : token, "user_name": username]
+//        
+//        
+//        let configuration = URLSessionConfiguration.default
+//        configuration.timeoutIntervalForRequest = 3
+//        configuration.timeoutIntervalForResource = 3
+//        manager = Alamofire.SessionManager(configuration: configuration)
+//        
+//        task = manager.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil)
+//        task.responseJSON { response in
+//            
+//            var message = "Other Response"
+//            let popUpTitle = "Status : \(response.result.description.lowercased())"
+//            if response.result.isSuccess {
+//                if let returnDict = response.result.value as? [String: String] {
+//                    if let returnMessage = returnDict["response"]
+//                    {
+//                        message = returnMessage
+//                        //print(message)
+//                        
+//                        if message == "Invalid Token"{
+//                            
+//                            self.requestEnd()
+//                            return
+//                        }
+//                    }
+//                }
+//            }
+//            self.requestEnd()
+//            
+//        }
+//    }
+//    
+//    
+//    func requestStart() {
+//        if !isLoadingSetup {
+//            setUpLoadingIndicator()
+//        }
+//        self.isUserInteractionEnabled = false
+//        loadingIndicator.startAnimating()
+//        //self.backgroundColor = UIColor.green
+//    }
     
     
     func setUpLoadingIndicator() {
@@ -198,11 +199,12 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
         isLoadingSetup = true
         
     }
-    func requestEnd() {
-        self.isUserInteractionEnabled = true
-        loadingIndicator.stopAnimating()
-        //self.backgroundColor = UIColor.clear
-    }
+    
+//    func requestEnd() {
+//        self.isUserInteractionEnabled = true
+//        loadingIndicator.stopAnimating()
+//        //self.backgroundColor = UIColor.clear
+//    }
     
     
     
@@ -210,5 +212,5 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
 }
 
 protocol ACBoardCellDelegate {
-    func ACBoardOnOffBtnPressed(aircond : Aircond)
+    func ACBoardOnOffBtnPressed(indexPath : IndexPath)
 }

@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import Firebase
+import Alamofire
 
 
 class ACDashboardViewController: ACRequestViewController {
@@ -123,6 +124,7 @@ extension ACDashboardViewController : UICollectionViewDataSource, UICollectionVi
             else { return UICollectionViewCell() }
         
         cell.showACStatus(airconds[indexPath.row])
+        cell.indexPath = indexPath
         cell.delegate = self
         return cell
     }
@@ -141,9 +143,78 @@ extension ACDashboardViewController : UICollectionViewDataSource, UICollectionVi
 }
 
 extension ACDashboardViewController : ACBoardCellDelegate {
-    func ACBoardOnOffBtnPressed(aircond: Aircond) {
-        //TODO : only diable selected cell will sending request
-        sendChangeStatusRequest(aircond: aircond)
+    func ACBoardOnOffBtnPressed(indexPath: IndexPath) {
+        onOffPressed(at: indexPath)
     }
+    
+    func onOffPressed(at indexPath : IndexPath) {
+        //ac : Aircond){
+        guard let selectedCell = boardCollectionView.cellForItem(at: indexPath) as? ACBoardCollectionViewCell
+            else { return }
+        
+        
+        requestStart(cell: selectedCell)
+        
+        let url : String = UserDefaults.getDomain()
+        let token : String = UserDefaults.getToken()
+        let username : String = UserDefaults.getName()
+        let ac = airconds[indexPath.row].copy()
+        
+        let urlRequest = url + "app_state/\(ac.id)"
+        let param : [String:Any] = ["aircond" : ["status":ac.statusString(), "mode":ac.modeString(), "fan_speed": ac.fanspeedString(), "temperature" : ac.temperaturString()], "app_token" : token, "user_name": username]
+        
+        
+//        let configuration = URLSessionConfiguration.default
+//        configuration.timeoutIntervalForRequest = 3
+//        configuration.timeoutIntervalForResource = 3
+//        manager = Alamofire.SessionManager(configuration: configuration)
+//        
+        
+        manager.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+            
+            var message = "Other Response"
+            let popUpTitle = "Status : \(response.result.description.lowercased())"
+            if response.result.isSuccess {
+                if let returnDict = response.result.value as? [String: String] {
+                    if let returnMessage = returnDict["response"]
+                    {
+                        message = returnMessage
+                        //print(message)
+                        
+                        if message == "Invalid Token"{
+                            
+                            self.requestEnd(cell : selectedCell, title : popUpTitle, message : message)
+                            return
+                        }
+                    }
+                }
+            }
+            self.requestEnd(cell : selectedCell, title : popUpTitle, message : message)
+            
+        }
+    }
+    
+    
+    func requestStart(cell : ACBoardCollectionViewCell) {
+        if !cell.isLoadingSetup {
+            cell.setUpLoadingIndicator()
+        }
+        
+        cell.isUserInteractionEnabled = false
+        cell.loadingIndicator.startAnimating()
+        //self.backgroundColor = UIColor.green
+    }
+    
+    func requestEnd(cell : ACBoardCollectionViewCell, title : String , message : String) {
+        cell.isUserInteractionEnabled = true
+        cell.loadingIndicator.stopAnimating()
+        //self.backgroundColor = UIColor.clear
+    }
+
+    
+//    func ACBoardOnOffBtnPressed(aircond: Aircond) {
+//        //TODO : only diable selected cell will sending request
+//        sendChangeStatusRequest(aircond: aircond)
+//    }
 }
 
