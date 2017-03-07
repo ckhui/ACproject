@@ -15,8 +15,10 @@ import Alamofire
 class ACDashboardViewController: ACRequestViewController {
     
     var airconds = [Aircond]()
+    var group = [ACGroup]()
     var boardSize = CGSize()
     var ref: FIRDatabaseReference!
+    var allowLoadData = true
     
     @IBOutlet weak var boardCollectionView: UICollectionView! {
         didSet{
@@ -29,14 +31,20 @@ class ACDashboardViewController: ACRequestViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initLogoutButton()
-        
-        ref = FIRDatabase.database().reference()
-        airconds = []
-        loadFromFirebase()
+    
+        if allowLoadData {
+            setTopLogo()
+            airconds = []
+            initLogoutButton()
+            ref = FIRDatabase.database().reference()
+            loadFromFirebase()
+            listenToFirebase()
+        }else{
+            boardCollectionView.reloadData()
+        }
         
         let cellWidth = boardCollectionView.frame.width
-        let cellHeight = cellWidth / 350 * 150
+        let cellHeight = cellWidth / 350 * 120 //150
         boardSize = CGSize(width: cellWidth , height: cellHeight)
         
         
@@ -52,28 +60,42 @@ class ACDashboardViewController: ACRequestViewController {
     func loadFromFirebase(){
         
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            print("fetching data")
+            //print("fetching data")
             //print (snapshot.value as Any)
             guard let value = snapshot.value
                 else { return }
             let jsonVar = JSON(value)
             let aircondsJson = jsonVar["airconds"]
             
+            let groupsJson = jsonVar["aircond_group"]
+            if groupsJson != JSON.null
+            {
+                self.initACGroups(groupsJson)
+            }
+            
             //print(aircondsJson)
             self.airconds = []
             
             for ac in aircondsJson{
+                
+                if ac.1 == JSON.null{
+                    continue
+                }
+                
                 let tempAc = Aircond(id: ac.0,value: ac.1)
-                print("fetch ac... \(ac.0)")
+                //print("fetch ac... \(ac.0)")
                 self.airconds.append(tempAc)
             }
             
             DispatchQueue.main.async {
+                self.saveACToGroup()
                 self.sortAircondById()
                 self.boardCollectionView.reloadData()
             }
         })
-        
+    }
+    
+    func listenToFirebase(){
         ref.child("airconds").observe(.childChanged, with: { (snapshot) in
             
             guard let value = snapshot.value
@@ -83,6 +105,47 @@ class ACDashboardViewController: ACRequestViewController {
             let updatedAc = Aircond(id: snapshot.key, value: json)
             self.updateAircond(ac : updatedAc)
         })
+        
+        
+//        ref.child("aircond_group").observe(.childChanged, with: { (snapshot) in
+//            
+//            guard let value = snapshot.value
+//                else { return }
+//            
+//            let json = JSON(value)
+//            let updatedAc = ACGroup(id: snapshot.key, name: json["titile"].string)
+//            //self.updateAircond(ac : updatedAc)
+//        })
+
+        
+        
+    }
+    
+    func initACGroups(_ json : JSON){
+        
+        
+        json.forEach { (key, value) in
+            let newGroup = ACGroup(id: key, name: value["title"].string)
+            group.append(newGroup)
+        }
+    }
+    
+    func saveACToGroup(){
+        
+        airconds.forEach { (ac) in
+            for groupId in ac.group {
+                if let gp = group.first(where: {$0.id == groupId}) {
+                    gp.airconds.append(ac)
+                } else{
+                    print("group info missing for id : \(groupId)")
+                    let newGroup = ACGroup(id: groupId, name: nil)
+                    newGroup.airconds.append(ac)
+                    group.append(newGroup)
+                }
+            }
+        }
+        
+        //dump (group)
     }
     
     func sortAircondById(){
@@ -109,6 +172,15 @@ class ACDashboardViewController: ACRequestViewController {
                 VC.selectedAircond = airconds[indexPath.row].copy()
             }
         }
+            
+            
+        else if segue.identifier == "toGroupView" {
+            if let VC = segue.destination as? ACGroupViewController {
+                VC.group = group
+            }
+        }
+        
+        
     }
     
 }
@@ -134,12 +206,12 @@ extension ACDashboardViewController : UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        //print(indexPath.row)
         
         performSegue(withIdentifier: "toRemotePage", sender: indexPath)
         
     }
- 
+    
 }
 
 extension ACDashboardViewController : ACBoardCellDelegate {
@@ -164,11 +236,11 @@ extension ACDashboardViewController : ACBoardCellDelegate {
         let param : [String:Any] = ["aircond" : ["status":ac.statusString(), "mode":ac.modeString(), "fan_speed": ac.fanspeedString(), "temperature" : ac.temperaturString()], "app_token" : token, "user_name": username]
         
         
-//        let configuration = URLSessionConfiguration.default
-//        configuration.timeoutIntervalForRequest = 3
-//        configuration.timeoutIntervalForResource = 3
-//        manager = Alamofire.SessionManager(configuration: configuration)
-//        
+        //        let configuration = URLSessionConfiguration.default
+        //        configuration.timeoutIntervalForRequest = 3
+        //        configuration.timeoutIntervalForResource = 3
+        //        manager = Alamofire.SessionManager(configuration: configuration)
+        //
         
         manager.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
             
@@ -206,15 +278,34 @@ extension ACDashboardViewController : ACBoardCellDelegate {
     }
     
     func requestEnd(cell : ACBoardCollectionViewCell, title : String , message : String) {
-        cell.isUserInteractionEnabled = true
         cell.loadingIndicator.stopAnimating()
+        //cell.messageLabel.alpha = 1.0
+        if title == "Status : failure"{
+            cell.messageLabel.textColor = UIColor.red
+        }
+        else if title == "Status : success" {
+            cell.messageLabel.textColor = UIColor.customeGreen
+        }
+        
+        
+        cell.messageLabel.text = "\(title) : \n\(message)"
+        cell.messageLabel.isHidden = false
+        UIView.animate(withDuration: 1.0, delay: 1.0, options: .curveEaseIn, animations: {
+            cell.messageLabel.alpha = 0.0
+        }) { (bool) in
+            cell.messageLabel.isHidden = true
+            cell.messageLabel.alpha = 1.0
+            cell.isUserInteractionEnabled = true
+        }
+        
+        //        cell.isUserInteractionEnabled = true
         //self.backgroundColor = UIColor.clear
     }
-
     
-//    func ACBoardOnOffBtnPressed(aircond: Aircond) {
-//        //TODO : only diable selected cell will sending request
-//        sendChangeStatusRequest(aircond: aircond)
-//    }
+    
+    //    func ACBoardOnOffBtnPressed(aircond: Aircond) {
+    //        //TODO : only diable selected cell will sending request
+    //        sendChangeStatusRequest(aircond: aircond)
+    //    }
 }
 

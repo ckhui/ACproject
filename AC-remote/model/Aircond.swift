@@ -17,6 +17,7 @@ class Aircond {
     var fanSpeed : FanSpeed = .MEDIUM
     var temperature : Int = 20
     var alias : String = ""
+    var group : [String] = []
     
     enum Status : Int {
         case ON = 0
@@ -87,6 +88,14 @@ class Aircond {
         
         if let _alias = value["alias"].string {
             alias = _alias
+        }
+        
+        
+        let _group = value["aircond_group_id"].stringValue
+        if _group != "" {
+            group.append(_group)
+        } else {
+            group = ["Ungrouped"]
         }
 
     }

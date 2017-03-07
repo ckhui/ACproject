@@ -24,6 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navBarAppearance = UINavigationBar.appearance()
         navBarAppearance.barTintColor =  Style.menuBarBGColor
         navBarAppearance.tintColor = Style.menuBarTintColor
+//        if let image = UIImage(named: "next_logo"),
+//            let image2 = UIImage().resizeImage(image: image, newHeight: 40.0) {
+//            image2.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+////        UIEdgeInsetsMake(
+//        
+//        navBarAppearance.setBackgroundImage(image2, for: .default)
+//        }
         
         observeNotification()
         return true

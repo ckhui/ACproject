@@ -18,6 +18,9 @@
 		5F770F051E5FE9B500A260A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5F770F041E5FE9B500A260A6 /* GoogleService-Info.plist */; };
 		5FC1289F1E5EA8860032D951 /* ImageSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC1289E1E5EA8860032D951 /* ImageSegmentedControl.swift */; };
 		5FC128A11E5EAA5F0032D951 /* ImageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC128A01E5EAA5F0032D951 /* ImageName.swift */; };
+		5FC5A8221E6D1657009D3C99 /* ACGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC5A8211E6D1657009D3C99 /* ACGroup.swift */; };
+		5FC5A8281E6D66F6009D3C99 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC5A8271E6D66F6009D3C99 /* GroupTableViewCell.swift */; };
+		5FCB178E1E6EBA9800861659 /* ACGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB178D1E6EBA9800861659 /* ACGroupViewController.swift */; };
 		828E09FA6A0CCB623943364F /* Pods_AC_remote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C80DC2DBA6A809458D01BAD /* Pods_AC_remote.framework */; };
 		A10453F81E1DF7F900B51BD1 /* Aircond.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10453F71E1DF7F900B51BD1 /* Aircond.swift */; };
 		A116DE511E4D670E00EDBDEA /* ACBoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A116DE4F1E4D670E00EDBDEA /* ACBoardCollectionViewCell.swift */; };
@@ -65,6 +68,9 @@
 		5F770F041E5FE9B500A260A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5FC1289E1E5EA8860032D951 /* ImageSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSegmentedControl.swift; sourceTree = "<group>"; };
 		5FC128A01E5EAA5F0032D951 /* ImageName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageName.swift; sourceTree = "<group>"; };
+		5FC5A8211E6D1657009D3C99 /* ACGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACGroup.swift; sourceTree = "<group>"; };
+		5FC5A8271E6D66F6009D3C99 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
+		5FCB178D1E6EBA9800861659 /* ACGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACGroupViewController.swift; sourceTree = "<group>"; };
 		6C80DC2DBA6A809458D01BAD /* Pods_AC_remote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AC_remote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EFBD19346EF6BF1EB13915B /* Pods_AC_remoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AC_remoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95848670E02D2C36FD955327 /* Pods_AC_remoteUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AC_remoteUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,11 +187,12 @@
 			isa = PBXGroup;
 			children = (
 				A18A03011E1CCBCC00D110F0 /* LoginViewController.swift */,
-				A19212B01E5C35B2000ECC68 /* RemotePageViewController.swift */,
 				A135E8A11E25E656006866A3 /* SignUpViewController.swift */,
 				5F27174A1E247A56007CE277 /* SettingPageViewController.swift */,
-				A1E644161E2C9EFA0087C72A /* NextNavigationController.swift */,
 				A17226081E516C5600FCCAD0 /* ACDashboardViewController.swift */,
+				A19212B01E5C35B2000ECC68 /* RemotePageViewController.swift */,
+				5FCB178D1E6EBA9800861659 /* ACGroupViewController.swift */,
+				A1E644161E2C9EFA0087C72A /* NextNavigationController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -194,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				A10453F71E1DF7F900B51BD1 /* Aircond.swift */,
+				5FC5A8211E6D1657009D3C99 /* ACGroup.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -218,6 +226,7 @@
 				5F7495051E63DFED00AA16AF /* ACModeView.swift */,
 				A148AE461E271E0A0019EAAB /* CustomStyledButtom.swift */,
 				A116DE4F1E4D670E00EDBDEA /* ACBoardCollectionViewCell.swift */,
+				5FC5A8271E6D66F6009D3C99 /* GroupTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -539,6 +548,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FC5A8281E6D66F6009D3C99 /* GroupTableViewCell.swift in Sources */,
 				5FC128A11E5EAA5F0032D951 /* ImageName.swift in Sources */,
 				5FC1289F1E5EA8860032D951 /* ImageSegmentedControl.swift in Sources */,
 				A148AE471E271E0A0019EAAB /* CustomStyledButtom.swift in Sources */,
@@ -555,7 +565,9 @@
 				A135E8A21E25E656006866A3 /* SignUpViewController.swift in Sources */,
 				A135E8A01E25E55A006866A3 /* Style.swift in Sources */,
 				5F74950A1E63E4F400AA16AF /* ViewControllerExtension.swift in Sources */,
+				5FCB178E1E6EBA9800861659 /* ACGroupViewController.swift in Sources */,
 				A116DE511E4D670E00EDBDEA /* ACBoardCollectionViewCell.swift in Sources */,
+				5FC5A8221E6D1657009D3C99 /* ACGroup.swift in Sources */,
 				5F7495061E63DFED00AA16AF /* ACModeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

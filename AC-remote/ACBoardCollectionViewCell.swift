@@ -33,21 +33,19 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
     var aircond = Aircond()
     var loadingIndicator = UIActivityIndicatorView()
     var isLoadingSetup = false
+    var messageLabel = UILabel()
     
     var indexPath : IndexPath!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        layer.borderWidth = 2.0
-        layer.borderColor = UIColor.black.cgColor
+        layer.borderWidth = 3.0
+        layer.borderColor = UIColor.customeGreen.cgColor //UIColor.black.cgColor
         //layer.backgroundColor = UIColor.lightGray.cgColor
+        layer.cornerRadius = 20.0
         
-        loadingIndicator.frame = CGRect.zero
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.alpha = 0.5
-        loadingIndicator.backgroundColor = UIColor.lightGray
-        self.addSubview(loadingIndicator)
+
         
     }
     
@@ -194,7 +192,22 @@ class ACBoardCollectionViewCell: UICollectionViewCell {
 //        loadingIndicator.layer.cornerRadius = min(onOffButton.frame.width, onOffButton.frame.height) / 4
         
         loadingIndicator.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
-        loadingIndicator.layer.cornerRadius = min(frame.width, frame.height) / 4
+        loadingIndicator.layer.cornerRadius = 20.0 //min(frame.width, frame.height) / 4
+        //loadingIndicator.frame = CGRect.zero
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.alpha = 0.5
+        loadingIndicator.backgroundColor = UIColor.lightGray
+        self.addSubview(loadingIndicator)
+        
+        messageLabel.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
+        messageLabel.layer.cornerRadius = 20.0
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.alpha = 1.0
+        messageLabel.adjustsFontSizeToFitWidth = true
+        messageLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        messageLabel.isHidden = true
+        self.addSubview(messageLabel)
         
         isLoadingSetup = true
         

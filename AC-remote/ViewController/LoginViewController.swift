@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class LoginViewController: UIViewController {
     
@@ -33,6 +34,7 @@ class LoginViewController: UIViewController {
     
     var message : String = "" {
         didSet{
+            
             if message == "" {
                 messageLabel.isHidden = true
             }else{
@@ -114,9 +116,10 @@ class LoginViewController: UIViewController {
     
     func onSignInButtonPressed(){
         
-        let (isValid, messageString) = validateInput()
-        if !isValid {
-            message = messageString
+        let result = validateInput()
+        if !result.isSuccess{
+            message = result.response
+            return
         }
         
         
@@ -140,7 +143,7 @@ class LoginViewController: UIViewController {
     }
     
     
-    func validateInput() -> (Bool, String) {
+    func validateInput() -> (isSuccess : Bool,response : String) {
         if usernameTextField.text == "" {
             return (false, "Username cannot be empty")
         }
@@ -184,16 +187,16 @@ class LoginViewController: UIViewController {
         let param = ["user_name": username ,"app_token" : token]
         
         Alamofire.request(urlRequest, parameters: param).responseString { (response) in
-            print("validate token")
+            //print("validate token")
             if let component = response.result.value?.components(separatedBy: "\"") {
                 if component.count > 1 {
                     if component[component.count - 2] == "Your current token is valid" {
-                        print("token is valid")
+                        //print("token is valid")
                         NotificationCenter.appSignIn()
                     }
                 }
             }
-            print(response.result.value as Any)
+            //print(response.result.value as Any)
         }
     }
     

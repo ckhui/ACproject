@@ -75,6 +75,7 @@ class RemotePageViewController: ACRequestViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTemperatureLabel()
+        setTopLogo()
         showAircondValue()
         
         
@@ -247,7 +248,7 @@ class RemotePageViewController: ACRequestViewController {
         let index = (fanControl.selectedIndex + 1) % 4
         if let speed = Aircond.FanSpeed(rawValue: index) {
             selectedAircond.fanSpeed = speed
-            print(speed)
+            //print(speed)
         }
         showFanspeed()
     }

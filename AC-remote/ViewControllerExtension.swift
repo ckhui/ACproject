@@ -20,12 +20,17 @@ extension UIViewController{
         present(popUP, animated: true, completion: nil)
     }
     
-    func setLogo() {
+    func setTopLogo() {
         let logoImage = UIImage(named: "next_logo")
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
         imageView.image = logoImage
         imageView.contentMode = .scaleAspectFit
-        self.navigationItem.titleView = imageView
+
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
+        imageView.frame = titleView.bounds;
+        titleView.addSubview(imageView)
+        
+        self.navigationItem.titleView = titleView;
     }
     
     func setNaviBarHeight(height : CGFloat){
@@ -37,7 +42,7 @@ extension UIViewController{
     
     func initNaviBar(){
         setNaviBarHeight(height: 80)
-        setLogo()
+        setTopLogo()
     }
 }
 
@@ -72,7 +77,7 @@ class ACRequestViewController : UIViewController {
         let urlRequest = url + "app_state/\(aircond.id)"
         let param : [String:Any] = ["aircond" : ["status":aircond.statusString(), "mode":aircond.modeString(), "fan_speed": aircond.fanspeedString(), "temperature" : aircond.temperaturString()], "app_token" : token, "user_name": username]
         
-        print(param)
+        //print(param)
         
         manager.request(urlRequest, method: .post, parameters: param, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
             
@@ -109,6 +114,7 @@ class ACRequestViewController : UIViewController {
             self.warningPopUp(withTitle: popUpTitle, withMessage: message)
         }
     }
+    
     
     
     func popUpToLogUserOut(title: String, message : String,withCancle cancle : Bool = false){
