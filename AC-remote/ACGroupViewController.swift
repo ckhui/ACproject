@@ -11,18 +11,18 @@ import UIKit
 class ACGroupViewController: ACRequestViewController {
 
     var group = [ACGroup]()
+    var boardSize = CGSize()
     
-    @IBOutlet weak var groupTableView: UITableView!{
+    @IBOutlet weak var groupCollectionView: UICollectionView! {
         didSet{
-            groupTableView.dataSource = self
-            groupTableView.delegate = self
-            groupTableView.estimatedRowHeight = 80
-            //groupTableView.rowHeight = UITableViewAutomaticDimension
+            groupCollectionView.dataSource = self
+            groupCollectionView.delegate = self
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        groupTableView.reloadData()
+        groupCollectionView.reloadData()
         // Do any additional setup after loading the view.
     }
 
@@ -35,17 +35,14 @@ class ACGroupViewController: ACRequestViewController {
 
 }
 
-extension ACGroupViewController : UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+extension ACGroupViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return group.count
     }
     
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? GroupTableViewCell
-            else { return UITableViewCell() }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? GroupCollectionViewCell
+            else { return UICollectionViewCell() }
         
         let tempGroup = group[indexPath.row]
         
@@ -57,28 +54,32 @@ extension ACGroupViewController : UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         didSelect(group: group[indexPath.row])
     }
     
     func didSelect(group : ACGroup){
         let mainSB = UIStoryboard(name: "Main", bundle: Bundle.main)
-        if let remoteVC = mainSB.instantiateViewController(withIdentifier: "ACDashboardViewController") as? ACDashboardViewController {
+        if let dashboardVC = mainSB.instantiateViewController(withIdentifier: "ACDashboardViewController") as? ACDashboardViewController {
             
-            remoteVC.allowLoadData = false
-            remoteVC.navigationItem.leftBarButtonItem = nil
-            remoteVC.navigationItem.rightBarButtonItem = nil
-            remoteVC.title = group.name
-            remoteVC.airconds = group.airconds
-            remoteVC.group = []
+            dashboardVC.allowLoadData = false
+            dashboardVC.navigationItem.leftBarButtonItem = nil
+            dashboardVC.navigationItem.rightBarButtonItem = nil
+            dashboardVC.title = group.name
+            dashboardVC.airconds = group.airconds
+            dashboardVC.boardSize = boardSize
+            dashboardVC.group = []
             
-            navigationController?.pushViewController(remoteVC, animated: true)
+            navigationController?.pushViewController(dashboardVC, animated: true)
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return boardSize
+    }
 }
 
-extension ACGroupViewController : GroupTableViewCellDelegate {
+extension ACGroupViewController : GroupCollectionViewCellDelegate {
     func ACGroupOnAll(at index: Int) {
         
         print("ON \(group[index].name)")

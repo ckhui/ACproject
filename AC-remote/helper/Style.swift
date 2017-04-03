@@ -61,7 +61,6 @@ class NEXTViewController: UIViewController {
 
 class Style {
     
-    
     //TODO : background icon image
     // timeout for request
     // allow cancle request

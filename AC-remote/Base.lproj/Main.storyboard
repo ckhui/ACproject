@@ -508,67 +508,93 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="H6c-mN-w6M">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="b6a-jt-dv4">
+                                <rect key="frame" x="4" y="68" width="406" height="664"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="80" id="VkX-zm-3vM" customClass="GroupTableViewCell" customModule="AC_remote" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VkX-zm-3vM" id="s5m-gb-4YU">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="Oly-e1-9sf">
+                                    <size key="itemSize" width="308" height="112"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="lkL-vy-A3r" customClass="GroupCollectionViewCell" customModule="AC_remote" customModuleProvider="target">
+                                        <rect key="frame" x="49" y="0.0" width="308" height="112"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="308" height="112"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HT2-uV-moc">
-                                                    <rect key="frame" x="15" y="10" width="233" height="26"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="248" verticalHuggingPriority="248" horizontalCompressionResistancePriority="747" verticalCompressionResistancePriority="747" text="Group Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MPz-DJ-fGe">
+                                                    <rect key="frame" x="10" y="16.666666666666671" width="114" height="35"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZd-0z-MUa">
-                                                    <rect key="frame" x="256" y="10" width="71" height="60"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="ON ALL"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKK-vb-b3l">
+                                                    <rect key="frame" x="128" y="16.666666666666671" width="80" height="80"/>
+                                                    <state key="normal" title="ON ALL" image="power-on"/>
                                                     <connections>
-                                                        <action selector="onAllButtonPressed:" destination="VkX-zm-3vM" eventType="touchUpInside" id="jC1-W0-6Ri"/>
+                                                        <action selector="offAllButtonPressed:" destination="lkL-vy-A3r" eventType="touchUpInside" id="f6b-2N-2RE"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTo-p4-NYM">
-                                                    <rect key="frame" x="335" y="11" width="71" height="60"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="OFF ALL"/>
-                                                    <connections>
-                                                        <action selector="offAllButtonPressed:" destination="VkX-zm-3vM" eventType="touchUpInside" id="0ng-4s-tA7"/>
-                                                    </connections>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="#AC : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7x-Zg-hpq">
-                                                    <rect key="frame" x="15" y="49" width="233" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#AC : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0l-g0-bwB">
+                                                    <rect key="frame" x="10" y="61.666666666666671" width="114" height="35.000000000000014"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oXG-mc-WIl">
+                                                    <rect key="frame" x="218" y="16.666666666666671" width="80" height="80"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Bgi-Ds-jdg"/>
+                                                        <constraint firstAttribute="width" secondItem="oXG-mc-WIl" secondAttribute="height" multiplier="1:1" id="mgk-gJ-h1W"/>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="z90-gu-Cso"/>
+                                                    </constraints>
+                                                    <state key="normal" title="OFF ALL" image="power-off"/>
+                                                    <connections>
+                                                        <action selector="onAllButtonPressed:" destination="lkL-vy-A3r" eventType="touchUpInside" id="YvP-uL-HaO"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
-                                        </tableViewCellContentView>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="oXG-mc-WIl" firstAttribute="centerY" secondItem="lkL-vy-A3r" secondAttribute="centerY" id="1jU-kU-AqE"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oXG-mc-WIl" secondAttribute="bottom" constant="10" id="5Wo-k5-C9y"/>
+                                            <constraint firstItem="MPz-DJ-fGe" firstAttribute="height" secondItem="p0l-g0-bwB" secondAttribute="height" id="6rI-Qk-eDj"/>
+                                            <constraint firstAttribute="trailing" secondItem="oXG-mc-WIl" secondAttribute="trailing" constant="10" id="Jn0-p0-f7g"/>
+                                            <constraint firstItem="iKK-vb-b3l" firstAttribute="top" secondItem="oXG-mc-WIl" secondAttribute="top" id="K6q-LA-QSj"/>
+                                            <constraint firstItem="oXG-mc-WIl" firstAttribute="leading" secondItem="iKK-vb-b3l" secondAttribute="trailing" constant="10" id="KHw-2C-Z9x"/>
+                                            <constraint firstItem="iKK-vb-b3l" firstAttribute="height" secondItem="oXG-mc-WIl" secondAttribute="height" id="NlA-2P-Fik"/>
+                                            <constraint firstItem="iKK-vb-b3l" firstAttribute="bottom" secondItem="oXG-mc-WIl" secondAttribute="bottom" id="PtM-5h-kRU"/>
+                                            <constraint firstItem="p0l-g0-bwB" firstAttribute="trailing" secondItem="MPz-DJ-fGe" secondAttribute="trailing" id="SJc-ms-BOt"/>
+                                            <constraint firstItem="p0l-g0-bwB" firstAttribute="bottom" secondItem="iKK-vb-b3l" secondAttribute="bottom" id="T3H-78-m3P"/>
+                                            <constraint firstItem="p0l-g0-bwB" firstAttribute="leading" secondItem="MPz-DJ-fGe" secondAttribute="leading" id="X6m-9S-h6b"/>
+                                            <constraint firstItem="MPz-DJ-fGe" firstAttribute="top" secondItem="iKK-vb-b3l" secondAttribute="top" id="bWn-q2-QUa"/>
+                                            <constraint firstItem="iKK-vb-b3l" firstAttribute="leading" secondItem="MPz-DJ-fGe" secondAttribute="trailing" constant="4" id="kPT-Vt-IsT"/>
+                                            <constraint firstItem="MPz-DJ-fGe" firstAttribute="leading" secondItem="lkL-vy-A3r" secondAttribute="leading" constant="10" id="m3n-Xe-CUL"/>
+                                            <constraint firstItem="iKK-vb-b3l" firstAttribute="width" secondItem="oXG-mc-WIl" secondAttribute="width" id="nBg-96-SS2"/>
+                                            <constraint firstItem="oXG-mc-WIl" firstAttribute="top" relation="greaterThanOrEqual" secondItem="lkL-vy-A3r" secondAttribute="top" constant="10" id="ulc-Rs-c4e"/>
+                                            <constraint firstItem="p0l-g0-bwB" firstAttribute="top" secondItem="MPz-DJ-fGe" secondAttribute="bottom" constant="10" id="z5D-kf-ElM"/>
+                                        </constraints>
                                         <connections>
-                                            <outlet property="groupNameLabel" destination="HT2-uV-moc" id="ugG-em-HZT"/>
-                                            <outlet property="subLabel" destination="f7x-Zg-hpq" id="SjS-WM-hW7"/>
+                                            <outlet property="groupNameLabel" destination="MPz-DJ-fGe" id="DbK-Wz-sj4"/>
+                                            <outlet property="subLabel" destination="p0l-g0-bwB" id="zAQ-0T-0B4"/>
                                         </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="H6c-mN-w6M" firstAttribute="top" secondItem="MKY-C2-1uW" secondAttribute="bottom" id="TdL-Il-pJi"/>
-                            <constraint firstAttribute="trailing" secondItem="H6c-mN-w6M" secondAttribute="trailing" id="W7u-9v-LLL"/>
-                            <constraint firstItem="1T2-Ug-xBS" firstAttribute="top" secondItem="H6c-mN-w6M" secondAttribute="bottom" id="fnT-FY-1Ao"/>
-                            <constraint firstItem="H6c-mN-w6M" firstAttribute="leading" secondItem="IrP-SQ-0yV" secondAttribute="leading" id="pc7-8c-kcX"/>
+                            <constraint firstItem="b6a-jt-dv4" firstAttribute="top" secondItem="MKY-C2-1uW" secondAttribute="bottom" constant="4" id="HhC-Yp-QoN"/>
+                            <constraint firstAttribute="trailing" secondItem="b6a-jt-dv4" secondAttribute="trailing" constant="4" id="cwW-RU-DHR"/>
+                            <constraint firstItem="1T2-Ug-xBS" firstAttribute="top" secondItem="b6a-jt-dv4" secondAttribute="bottom" constant="4" id="hAv-mZ-UAn"/>
+                            <constraint firstItem="b6a-jt-dv4" firstAttribute="leading" secondItem="IrP-SQ-0yV" secondAttribute="leading" constant="4" id="xp0-Bw-1tL"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="groupTableView" destination="H6c-mN-w6M" id="498-Sc-pOl"/>
+                        <outlet property="groupCollectionView" destination="b6a-jt-dv4" id="uH5-gP-qCd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1tn-EZ-82W" userLabel="First Responder" sceneMemberID="firstResponder"/>

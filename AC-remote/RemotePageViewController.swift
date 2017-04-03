@@ -68,8 +68,6 @@ class RemotePageViewController: ACRequestViewController {
         }
     }
     
-    
-    
     var tempCenterView = UILabel()
     
     override func viewDidLoad() {

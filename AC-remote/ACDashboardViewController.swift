@@ -16,7 +16,7 @@ class ACDashboardViewController: ACRequestViewController {
     
     var airconds = [Aircond]()
     var group = [ACGroup]()
-    var boardSize = CGSize()
+    var boardSize : CGSize!
     var ref: FIRDatabaseReference!
     var allowLoadData = true
     
@@ -24,14 +24,19 @@ class ACDashboardViewController: ACRequestViewController {
         didSet{
             boardCollectionView.dataSource = self
             boardCollectionView.delegate = self
-            //boardCollectionView.isPagingEnabled = true
         }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        if boardSize == nil {
+            let cellWidth = boardCollectionView.frame.width
+            let cellHeight = cellWidth / 350 * 120 //150
+            boardSize = CGSize(width: cellWidth , height: cellHeight)
+        }
+        
         if allowLoadData {
             setTopLogo()
             airconds = []
@@ -43,9 +48,6 @@ class ACDashboardViewController: ACRequestViewController {
             boardCollectionView.reloadData()
         }
         
-        let cellWidth = boardCollectionView.frame.width
-        let cellHeight = cellWidth / 350 * 120 //150
-        boardSize = CGSize(width: cellWidth , height: cellHeight)
         
         
         // Do any additional setup after loading the view.
@@ -107,16 +109,16 @@ class ACDashboardViewController: ACRequestViewController {
         })
         
         
-//        ref.child("aircond_group").observe(.childChanged, with: { (snapshot) in
-//            
-//            guard let value = snapshot.value
-//                else { return }
-//            
-//            let json = JSON(value)
-//            let updatedAc = ACGroup(id: snapshot.key, name: json["titile"].string)
-//            //self.updateAircond(ac : updatedAc)
-//        })
-
+        //        ref.child("aircond_group").observe(.childChanged, with: { (snapshot) in
+        //
+        //            guard let value = snapshot.value
+        //                else { return }
+        //
+        //            let json = JSON(value)
+        //            let updatedAc = ACGroup(id: snapshot.key, name: json["titile"].string)
+        //            //self.updateAircond(ac : updatedAc)
+        //        })
+        
         
         
     }
@@ -125,8 +127,11 @@ class ACDashboardViewController: ACRequestViewController {
         
         
         json.forEach { (key, value) in
-            let newGroup = ACGroup(id: key, name: value["title"].string)
-            group.append(newGroup)
+            if value != JSON.null {
+                let newGroup = ACGroup(id: key, name: value["title"].string)
+                print( "Group : add new group -> \(newGroup.id) : \(newGroup.name)")
+                group.append(newGroup)
+            }
         }
     }
     
@@ -135,9 +140,10 @@ class ACDashboardViewController: ACRequestViewController {
         airconds.forEach { (ac) in
             for groupId in ac.group {
                 if let gp = group.first(where: {$0.id == groupId}) {
+                    print("Group : add ac to group -> \(gp.name)")
                     gp.airconds.append(ac)
                 } else{
-                    print("group info missing for id : \(groupId)")
+                    print("GROUP : group info missing for id : \(groupId)")
                     let newGroup = ACGroup(id: groupId, name: nil)
                     newGroup.airconds.append(ac)
                     group.append(newGroup)
@@ -177,6 +183,7 @@ class ACDashboardViewController: ACRequestViewController {
         else if segue.identifier == "toGroupView" {
             if let VC = segue.destination as? ACGroupViewController {
                 VC.group = group
+                VC.boardSize = boardSize
             }
         }
         

@@ -1,16 +1,15 @@
 //
-//  GroupTableViewCell.swift
+//  GroupCollectionViewCell.swift
 //  AC-remote
 //
-//  Created by CKH on 06/03/2017.
+//  Created by CKH on 03/04/2017.
 //  Copyright © 2017 NEXTAcademy. All rights reserved.
 //
 
 import UIKit
 
-class GroupTableViewCell: UITableViewCell {
-
-    var delegate : GroupTableViewCellDelegate?
+class GroupCollectionViewCell: UICollectionViewCell {
+    var delegate : GroupCollectionViewCellDelegate?
     var indexPath = IndexPath()
     
     @IBOutlet weak var groupNameLabel: UILabel!
@@ -18,13 +17,11 @@ class GroupTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        layer.borderWidth = 3.0
+        layer.borderColor = UIColor.customeGreen.cgColor
+        layer.cornerRadius = 20.0
+        self.layoutMargins.bottom = 10
         // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     @IBAction func onAllButtonPressed(_ sender: Any) {
@@ -37,7 +34,7 @@ class GroupTableViewCell: UITableViewCell {
 
 }
 
-protocol GroupTableViewCellDelegate {
+protocol GroupCollectionViewCellDelegate {
     func ACGroupOnAll(at index : Int)
     func ACGroupOffAll(at index : Int)
 }
