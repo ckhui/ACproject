@@ -53,5 +53,51 @@ extension UIColor {
     static let customeYellow = UIColor(hexString: "#edb83dff") ?? UIColor.clear
     
     
+    static let hotRed = UIColor(hexString: "#4dc7fdff") ?? UIColor.red
+    
+    static let coldBlue = UIColor(hexString: "#cd1e10ff") ?? UIColor.blue
+    
+    
+    
+    private static let maxColor = UIColor.hotRed.cgColor
+    private static let minColor = UIColor.coldBlue.cgColor
+    
+    private static let minR = UIColor.minColor.components?[0] ?? 0.0
+    private static let minG = UIColor.minColor.components?[1] ?? 0.0
+    private static let minB = UIColor.minColor.components?[2] ?? 0.0
+    
+    private static var deltaR : CGFloat {
+        if let maxR = UIColor.maxColor.components?[0],
+            let minR = UIColor.minColor.components?[0] {
+            return (maxR - minR) / 14.0
+        }
+        else {
+            return 0
+        }
+    }
+    
+    private static var deltaG : CGFloat {
+        if let maxG = UIColor.maxColor.components?[1],
+            let minG = UIColor.minColor.components?[1] {
+            return (maxG - minG) / 14.0
+        }
+        else {
+            return 0
+        }
+    }
+    
+    private static var deltaB : CGFloat {
+        if let maxB = UIColor.maxColor.components?[2],
+            let minB = UIColor.minColor.components?[2] {
+            return (maxB - minB) / 14.0
+        }
+        else {
+            return 0
+        }
+    }
+    static func coldWarmColor(temp : Int) -> UIColor {
+        let changeTemp : CGFloat = 30 - CGFloat(temp)
+        return UIColor.init(red: minR + deltaR * changeTemp, green: minG + deltaG * changeTemp, blue: minB + deltaB * changeTemp, alpha: 1)
+    }
 }
 

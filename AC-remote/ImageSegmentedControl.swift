@@ -23,7 +23,8 @@ class ImageSegmentedControl: UIControl {
         }
     }
     
-    
+    var tempSavedImageNamed = ""
+    var isHided = false
     var imageNames : [String] = ["cold" , "dry", "wet"] {
         didSet{
             setupImages()
@@ -61,8 +62,8 @@ class ImageSegmentedControl: UIControl {
      
         backgroundColor = UIColor.clear
         setupImages()
-        insertSubview(thumbView, at: 0)
         
+        setupThumbView()
     }
     
     func setupImages() {
@@ -79,9 +80,7 @@ class ImageSegmentedControl: UIControl {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
+    func setupThumbView() {
         var selectedFrame = self.bounds
         let newWidth = selectedFrame.width / CGFloat(imageNames.count)
         selectedFrame.size.width = newWidth
@@ -92,7 +91,12 @@ class ImageSegmentedControl: UIControl {
         
         thumbView.layer.cornerRadius = cornerRadius
         layer.cornerRadius = cornerRadius
-        
+    
+        insertSubview(thumbView, at: 0)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
         let labelHeight = self.bounds.height
         let labelWidth = self.bounds.width / CGFloat(imageViews.count)
@@ -127,6 +131,10 @@ class ImageSegmentedControl: UIControl {
             return
         }
         
+        if index == 3 && isHided {
+            return
+        }
+        
         let imageView = imageViews[index]
         imageView.image = UIImage(named: imageNames[index])
 
@@ -139,20 +147,44 @@ class ImageSegmentedControl: UIControl {
             self.thumbView.frame = CGRect.zero
             return
         }
+//        
+//        if selectedIndex == 3 && isHided {
+//            selectedIndex = 2
+//            return
+//        }
+//        
         
-        let imageView = imageViews[selectedIndex]
-        
-        if selectedImageNames.count > selectedIndex {
+        //if selectedImageNames.count > selectedIndex {
+            let imageView = imageViews[selectedIndex]
             let imgName = selectedImageNames[selectedIndex]
             imageView.image = UIImage(named: imgName)
-        }
+            self.thumbView.frame = imageView.frame
+       // }
         
-        self.thumbView.frame = imageView.frame
+        
     }
     
 
+}
 
-
+//to hide/show fan auto option when dry / other mode
+extension ImageSegmentedControl {
+    func hideAuto() {
+        
+        if !isHided {
+            isHided = true
+            tempSavedImageNamed = imageNames.removeLast()
+        }
+    }
+    
+    func showAuto() {
+        if isHided && tempSavedImageNamed != "" {
+            isHided = false
+            imageNames.append(tempSavedImageNamed)
+            
+        }
+        
+    }
 }
 
 

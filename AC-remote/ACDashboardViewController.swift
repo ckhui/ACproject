@@ -129,7 +129,7 @@ class ACDashboardViewController: ACRequestViewController {
         json.forEach { (key, value) in
             if value != JSON.null {
                 let newGroup = ACGroup(id: key, name: value["title"].string)
-                print( "Group : add new group -> \(newGroup.id) : \(newGroup.name)")
+                //print( "Group : add new group -> \(newGroup.id) : \(newGroup.name)")
                 group.append(newGroup)
             }
         }
@@ -140,11 +140,11 @@ class ACDashboardViewController: ACRequestViewController {
         airconds.forEach { (ac) in
             for groupId in ac.group {
                 if let gp = group.first(where: {$0.id == groupId}) {
-                    print("Group : add ac to group -> \(gp.name)")
+                    //print("Group : add ac to group -> \(gp.name)")
                     gp.airconds.append(ac)
                 } else{
-                    print("GROUP : group info missing for id : \(groupId)")
-                    let newGroup = ACGroup(id: groupId, name: nil)
+                    //print("GROUP : group info missing for id : \(groupId)")
+                    let newGroup = ACGroup(id: groupId, name: groupId)
                     newGroup.airconds.append(ac)
                     group.append(newGroup)
                 }
@@ -152,6 +152,9 @@ class ACDashboardViewController: ACRequestViewController {
         }
         
         //dump (group)
+        group = group.filter { (gp) -> Bool in
+            gp.airconds.count > 0
+        }
     }
     
     func sortAircondById(){
@@ -238,6 +241,7 @@ extension ACDashboardViewController : ACBoardCellDelegate {
         let token : String = UserDefaults.getToken()
         let username : String = UserDefaults.getName()
         let ac = airconds[indexPath.row].copy()
+        ac.changeOnOffStatus()
         
         let urlRequest = url + "app_state/\(ac.id)"
         let param : [String:Any] = ["aircond" : ["status":ac.statusString(), "mode":ac.modeString(), "fan_speed": ac.fanspeedString(), "temperature" : ac.temperaturString()], "app_token" : token, "user_name": username]

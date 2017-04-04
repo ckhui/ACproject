@@ -113,6 +113,16 @@ class Aircond {
         return copy
     }
     
+    func changeOnOffStatus() {
+        switch  status {
+        case .ON:
+            status = .OFF
+        case .OFF:
+            status = .ON
+        default:
+            status = .PENDING
+        }
+    }
     
     func statusString() -> String{
         switch(status){

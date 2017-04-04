@@ -265,11 +265,13 @@
                     </view>
                     <connections>
                         <outlet property="fanControl" destination="Okm-bi-jIL" id="cZG-fW-ZSE"/>
+                        <outlet property="fanTitle" destination="20J-li-grs" id="yaQ-Oa-f8X"/>
                         <outlet property="modeControl" destination="IZm-0P-4Er" id="0Kf-Kg-5CF"/>
                         <outlet property="onOffButton" destination="0rr-if-Fvt" id="fRw-Ei-tfL"/>
                         <outlet property="sendButton" destination="uyp-eR-8bO" id="psS-UR-psu"/>
                         <outlet property="statusLabel" destination="S6g-xD-FlR" id="dgj-cS-Itq"/>
                         <outlet property="temperatureSlider" destination="gmp-hZ-867" id="1du-Nd-VoG"/>
+                        <outlet property="temperatureTitle" destination="41D-LP-h1D" id="iGG-eW-l9n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pie-XA-Osq" userLabel="First Responder" sceneMemberID="firstResponder"/>

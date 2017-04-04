@@ -23,6 +23,8 @@ class RemotePageViewController: ACRequestViewController {
     }
     
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var fanTitle: UILabel!
+    @IBOutlet weak var temperatureTitle: UILabel!
     
     
     @IBOutlet weak var modeControl: ImageSegmentedControl! {
@@ -70,6 +72,8 @@ class RemotePageViewController: ACRequestViewController {
     
     var tempCenterView = UILabel()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTemperatureLabel()
@@ -85,6 +89,9 @@ class RemotePageViewController: ACRequestViewController {
         tempCenterView.baselineAdjustment = .alignCenters
         tempCenterView.adjustsFontSizeToFitWidth = true
         tempCenterView.backgroundColor = UIColor.lightGray
+        
+        tempCenterView.font = UIFont(name: "ArialRoundedMTBold", size: 22)
+        
         tempCenterView.isHidden = true
         view.addSubview(tempCenterView)
     }
@@ -122,6 +129,37 @@ class RemotePageViewController: ACRequestViewController {
         
         tempCenterView.isHidden = false
         tempCenterView.text = "\(temp)ºC"
+        
+        //set center view color
+//        let maxColor = UIColor.hotRed.cgColor
+//        
+//        var maxR :CGFloat = 0.0 , maxG : CGFloat = 0.0 , maxB : CGFloat = 0.0
+//        if maxColor.numberOfComponents > 3,
+//            let components = maxColor.components {
+//            maxR = components[0]
+//            maxG = components[1]
+//            maxB = components[2]
+//        }
+//        
+//        let minColor = UIColor.coldBlue.cgColor
+//        var minR : CGFloat = 0.0 , minG : CGFloat = 0.0 , minB : CGFloat = 0.0
+//        
+//        if minColor.numberOfComponents > 3,
+//            let components = minColor.components {
+//            minR = components[0]
+//            minG = components[1]
+//            minB = components[2]
+//        }
+//        
+//        
+//        let changeTemp : CGFloat = 30 - CGFloat(temp)
+//        let changeR = (maxR - minR) / 14.0
+//        let changeG = (maxG - minG) / 14.0
+//        let changeB = (maxB - minB) / 14.0
+//        
+//        
+//        let color = UIColor.init(red: minR + changeR * changeTemp, green: minG + changeG * changeTemp, blue: minB + changeB * changeTemp, alpha: 1)
+        tempCenterView.backgroundColor = UIColor.coldWarmColor(temp: temp)
         
         selectedAircond.temperature = temp
         setTemperatureLabel(at: slider.thumbCenterX, withTemperature: temp)
@@ -179,21 +217,29 @@ class RemotePageViewController: ACRequestViewController {
         
         if selectedAircond.mode == .WET {
             fanControl.isHidden = true
+            fanTitle.isHidden = true
         }else{
             fanControl.isHidden = false
+            fanTitle.isHidden = false
             fanControl.displaySelectedIndex()
         }
         
         if selectedAircond.mode == .DRY {
             temperatureSlider.isHidden = true
             temperatureImageView.isHidden = true
+            temperatureTitle.isHidden = true
+            fanControl.hideAuto()
         }else{
             temperatureSlider.isHidden = false
             temperatureImageView.isHidden = false
+            temperatureTitle.isHidden = false
+            fanControl.showAuto()
         }
         
         showFanspeed()
         showTemperature()
+        
+        
     }
     
     
@@ -207,9 +253,16 @@ class RemotePageViewController: ACRequestViewController {
             return
         }
         
+        if selectedAircond.mode == .DRY && selectedAircond.fanSpeed == .AUTO {
+            selectedAircond.fanSpeed = .HIGH
+        }
+        
         let fanHashValue = selectedAircond.fanSpeed.hashValue
+        
+
+        
         if fanHashValue == 0 {
-            fanControl.selectedIndex = 3
+                fanControl.selectedIndex = 3
         }
         else {
             fanControl.selectedIndex = fanHashValue - 1
